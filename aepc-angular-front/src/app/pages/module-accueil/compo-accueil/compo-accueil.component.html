@@ -1,0 +1,52 @@
+  <div class="row">
+    <div class="col">
+    <p-card header="welcome to microservices base application demo" class="flex justify-content-left" [style]="{width: '770px'}">
+      <ul>
+        <li>amazing microservices applications compared to monolithic applications</li>
+        <li> here are the application demo with apis business microservices
+          <ul>
+            <li><span style="color: #0000ff;">api-address</span>: to manage addresses</li>
+            <li><span style="color: #0000ff;">api-company</span>: to manage companies</li>
+            <li><span style="color: #0000ff;">api-employee</span>: to manage employees</li>
+            <li><span style="color: #0000ff;">api-project</span>: to manage projects</li>
+          </ul>
+        </li>
+        <li>in this demo, each api business microservices has its own dependencies: db, configurations, etc</li>
+        <li>each api business microservices of the application is implemented in clean-architecture</li>
+        <li> each couple of apis: (api-company,api-address) and (api-emmployee,api-address), (api-project,
+          api-company),(api-project, api-emmployee) communicates. That is, to validate:
+          <ul>
+            <li>a company, api-company gets address from api-address</li>
+            <li>a employee, api-employee gets address from api-address</li>
+            <li>a project, api-project gets company and employee from company, employee apis</li>
+    
+          </ul>
+        </li>
+          <li> on start up each backend api microservices gets its configurations from a <span style="color: #0000ff;">api-config service</span>
+          <ul>
+            <li><span style="color: #0000ff;">api-address</span>: to manage addresses</li>
+            <li><span style="color: #0000ff;">api-company</span>: to manage companies</li>
+            <li><span style="color: #0000ff;">api-employee</span>: to manage employees</li>
+            <li><span style="color: #0000ff;">api-project</span>: to manage projects</li>
+            <li><span style="color: #0000ff;">api-securty-service</span>: to authenticate users'requests on the applicaton </li>
+            <li><span style="color: #0000ff;">api-registry-service</span>: to register apis with their name in a registry</li>
+            <li><span style="color: #0000ff;">api-gatway-service</span>: to route request from frontend to backend</li>
+          </ul>
+        </li>
+        <li> after they get their config, backend apis microservices register on <span style="color: #0000ff;">api-registry-service</span></li>
+        <li>a proxy api is configured to route request front (angular appli) to backend</li>
+        <li>our fronted is an angular application</li>
+        <li>each request from frontend or between apis that communicate must be authenticated
+          <ul>
+            <li>a jwt token must be provided within http request</li>
+            <li> a remote server for which destined the request decode the jwt token</li>
+          </ul>
+        </li>
+        
+      </ul>
+    </p-card>
+  </div>
+  <div class="col">
+    <img ngSrc="assets/demo.png" width="1100" height="750" alt="microservices base application demo">
+  </div>
+</div>

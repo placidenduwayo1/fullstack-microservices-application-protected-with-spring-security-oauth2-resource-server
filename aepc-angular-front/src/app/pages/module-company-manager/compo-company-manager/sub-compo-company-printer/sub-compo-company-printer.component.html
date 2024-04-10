@@ -1,0 +1,56 @@
+<p-card header="List of companies" *ngIf="companies">
+  <p-messages key="deleted" />
+  <p-messages key="rejected" />
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <p-table [value]="companies" responsiveLayout="scroll" styleClass="p-datatable-striped" *ngIf="companies"
+      [paginator]="true" [rows]="9" [showCurrentPageReport]="true"
+      currentPageReportTemplate="{first} - {last} of {totalRecords} entries" [rowsPerPageOptions]="[9, 10, 11]"
+      class="p-3">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>name</th>
+          <th>type</th>
+          <th>agency</th>
+          <th>connected date</th>
+          <th>address</th>
+          <button class="btn btn-outline-primary mt-2" *ngIf="companies"
+            (click)="onPrintNumberOfCompaniesEventEmitter(companies.length)">nb companies</button>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-company>
+        <tr>
+          <td>{{ company.companyId }}</td>
+          <td>{{ company.name }}</td>
+          <td>{{ company.type }}</td>
+          <td> {{company.agency}} </td>
+          <td>{{company.connectedDate}} </td>
+          <td>
+            <ul>
+              <li>{{ company.address.num }} {{ company.address.street }}</li>
+              <li>
+                {{ company.address.pb }}
+                {{ company.address.city }}
+                {{ company.address.country }}
+              </li>
+            </ul>
+          </td>
+          
+            <button class="btn">
+              <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onCompanyUpdate(company)"></i>
+            </button>
+            <button class="btn">
+              <i class="fa fa-trash" style="color: red" (click)="onCompanyDelete(company.companyId)"></i>
+            </button>
+            <button class="btn">
+              <i class="fa fa-list" style="color: mediumturquoise"
+                (click)="onPrintProjectsRelated(company.companyId)">
+                projects</i>
+            </button>
+
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+</p-card>

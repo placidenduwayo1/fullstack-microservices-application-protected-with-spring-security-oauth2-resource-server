@@ -1,0 +1,33 @@
+<div class=" card container mt-4" style="width: 500px; padding: 1em;">
+
+    <h4> Login-In UI <i class="fa fa-lock"></i> </h4>
+
+    <form [formGroup]="loginForm">
+
+        <div class="p-float-label mt-2">
+            <input pInputText id="login" formControlName="login" [ngClass]="{'is-invalid':
+            loginForm.get('username')?.touched && loginForm.get('login')?.invalid}" class="form-control" />
+            <label for="login">input your username</label>
+
+            <div class="invalid-feedback">
+                <span *ngIf="loginForm.controls['login'].errors?.['required']">required</span>
+            </div>
+        </div>
+        
+        <div class="p-float-label mt-2">
+            <p-password id="pwd" formControlName="pwd" [toggleMask]="true" [style]="{'width':'100%'}"[inputStyle]="{'width':'100%'}"
+            [ngClass]="{'is-invalid':loginForm.get('pwd')?.touched && loginForm.get('pwd')?.invalid}" />
+
+            <div class="invalid-feedback">
+                <span *ngIf="loginForm.controls['pwd'].errors?.['required']">required</span>
+            </div>
+        </div>
+
+        <div class="text-center mt-2">
+            <button type="submit" class="btn btn-outline-primary" [disabled]="loginForm.invalid" (click)="onLogin()">
+                sign-in
+            </button>
+        </div>
+    </form>
+
+</div>

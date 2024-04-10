@@ -1,0 +1,57 @@
+<p-card header="List of projects" *ngIf="projects">
+  <p-messages key="deleted"/>
+  <p-messages key="rejected"/>
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <p-table [value]="projects" responsiveLayout="scroll" styleClass="p-datatable-striped" *ngIf="projects"
+      [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+      currentPageReportTemplate="{first} - {last} of {totalRecords} entries" [rowsPerPageOptions]="[5, 10, 15]"
+      class="p-3">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>name</th>
+          <th>description</th>
+          <th>priority</th>
+          <th>state</th>
+          <th>employee</th>
+          <th>company</th>
+          <button class="btn btn-outline-primary" *ngIf="projects" (click)="onPrintNumberOfProject(projects.length)">nbr
+            projects</button>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-project>
+        <tr>
+          <td>{{ project.projectId }}</td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.priority }}</td>
+          <td>{{ project.state }}</td>
+          <td>
+            <ul>
+              <li>{{ project.employee.firstname }} {{ project.employee.lastname }}</li>
+              <li>{{ project.employee.email }}</li>
+              <li>{{ project.employee.role }}, {{ project.employee.state }}</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>{{ project.company.name }} {{ project.company.agency }}</li>
+              <li>{{ project.company.type }}</li>
+            </ul>
+          </td>
+          <td>
+          
+            <button class="btn">
+              <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onProjectUpdate(project)"></i>
+            </button>
+            <button class="btn">
+              <i class="fa fa-trash" style="color: red" (click)="onProjectDelete(project.projectId)"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </ng-container>
+</p-card>

@@ -1,0 +1,4 @@
+<p-card>
+  <button class="btn btn-outline-info mt-2" (click)="onPrintAddresses()">addresses</button> &nbsp;{{nbAddresses}}
+  <app-sub-compo-address-printer [addressesList]="addressesList" (nbrOfAddressesEmitter)="onPrintNbrOfAddresses($event)" />
+</p-card>

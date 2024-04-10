@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.placide.k8skafkaavroaepccleanarchibsmicrosemployee.infra.adapters.output.service.OutputEmployeeServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.104 s -- in com.placide.k8skafkaavroaepccleanarchibsmicrosemployee.infra.adapters.output.service.OutputEmployeeServiceImplTest

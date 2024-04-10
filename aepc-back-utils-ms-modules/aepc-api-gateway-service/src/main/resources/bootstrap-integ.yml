@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: aepc-api-gateway-service
+  main:
+    banner-mode: off
+  cloud:
+    config:
+      uri: http://aepc-api-ms-config-service:9009
+    gateway:
+      routes:
+        - id: aepc-api-spring-security-oauth2-service
+          uri: http://localhost:9011
+          predicates:
+            - Path=/api-auth/**
+        - id: aepc-api-spring-secur-oauth2-kafka-avro-bs-ms-address
+          uri: http://localhost:9012
+          predicates:
+            - Path=/api-address/**
+        - id: aepc-api-spring-secur-oauth2-kafka-avro-bs-ms-company
+          uri: http://localhost:9013
+          predicates:
+            - Path=/api-company/**
+        - id: aepc-api-spring-secur-oauth2-kafka-avro-bs-ms-employee
+          uri: http://localhost:9014
+          predicates:
+            - Path=/api-employee/**
+        - id: aepc-api-spring-secur-oauth2-kafka-avro-bs-ms-project
+          uri: http://localhost:9015
+          predicates:
+            - Path=/api-project/**
+message: api,welcome to gateway service api to route your fronted requests to backend services

@@ -1,0 +1,64 @@
+{
+  "namespace": "com.placide.k8skafkaavroaepccleanarchibsmicroscompany.domain.avrobeans",
+  "name": "CompanyAvro",
+  "type": "record",
+  "fields": [
+    {
+      "name": "companyId",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "agency",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string"
+    },
+    {
+      "name": "connectedDate",
+      "type": "string"
+    },
+    {
+      "name": "addressId",
+      "type": "string"
+    },
+    {
+      "name": "address",
+      "type": {
+        "type": "record",
+        "name": "Address",
+        "fields": [
+          {
+            "name": "addressId",
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "type": "int"
+          },
+          {
+            "name": "street",
+            "type": "string"
+          },
+          {
+            "name": "pb",
+            "type": "int"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

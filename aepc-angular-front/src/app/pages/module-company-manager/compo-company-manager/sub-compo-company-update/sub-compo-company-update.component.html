@@ -1,0 +1,53 @@
+<p-card header="Company informations" *ngIf="companyForm" [style]="{width: '800px'}">
+  <p-messages key="updated" />
+  <p-messages key="rejected" />
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <form [formGroup]="companyForm" (ngSubmit)="onCompanyUpdate()">
+      <label for="name">company name</label>
+      <input type="text" class="form-control" formControlName="name" [ngClass]="{
+            'is-invalid': companyForm.controls['name'].touched && companyForm.controls['name'].invalid
+          }" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="companyForm.controls['name'].errors?.['required']">required</span>
+        <span *ngIf="companyForm.controls['name'].errors?.['minlength']">very short company name</span>
+        <span *ngIf="companyForm.controls['name'].errors?.['maxlength']">too long company name</span>
+      </div>
+
+      <label for="type">type of company</label>
+      <select class="form-control" formControlName="type">
+        <option *ngFor="let type of companyTypes | keyvalue" [ngValue]="type.value">
+          {{ type.value }}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="companyForm.controls['type'].errors?.['required']">required</span>
+      </div>
+
+      <label for="agency">agency</label>
+      <input type="text" class="form-control" formControlName="agency" [ngClass]="{
+            'is-invalid': companyForm.controls['agency'].touched && companyForm.controls['agency'].invalid
+          }" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="companyForm.controls['agency'].errors?.['required']"> required</span>
+        <span *ngIf="companyForm.controls['agency'].errors?.['minlength']"> required</span>
+      </div>
+
+      <label for="addressId">Address ID for the company</label>
+      <select class="form-control" formControlName="addressId">
+        <option *ngFor="let addressMap of addressesMap | keyvalue" [ngValue]="addressMap.key">
+          {{addressMap.value}}
+        </option>
+      </select>
+
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="companyForm.invalid">
+          save
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</p-card>

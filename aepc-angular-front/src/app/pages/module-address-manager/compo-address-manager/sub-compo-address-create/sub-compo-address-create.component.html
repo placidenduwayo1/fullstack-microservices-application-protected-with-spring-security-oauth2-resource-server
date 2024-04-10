@@ -1,0 +1,72 @@
+<p-card header="Address informations" [style]="{width: '800px'}">
+  <p-messages key="added" />
+  <p-messages key="rejected" />
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <form [formGroup]="addressForm" (ngSubmit)="onAddressFormSubmit()">
+      <label for="num">num</label>
+      <input type="text" formControlName="num" class="form-control" [ngClass]="{
+            'is-invalid':
+              addressForm.controls['num'].touched &&
+              addressForm.controls['num'].invalid
+          }" />
+      <div class="invalid-feedback">
+        <span *ngIf="addressForm.controls['num'].errors?.['required']">
+          num required
+        </span>
+        <span *ngIf="addressForm.controls['num'].errors?.['min']">
+          invalid num
+        </span>
+      </div>
+
+      <label for="street">street</label>
+      <input type="text" formControlName="street" class="form-control" [ngClass]="{
+            'is-invalid':
+              addressForm.controls['street'].touched &&
+              addressForm.controls['street'].invalid
+          }" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="addressForm.controls['street'].errors?.['required']">
+          street name required
+        </span>
+        <span *ngIf="addressForm.controls['street'].errors?.['minlength']">
+          street name length is short
+        </span>
+      </div>
+
+
+      <label for="pb">pb</label>
+      <input type="text" formControlName="pb" class="form-control"
+        [ngClass]="{'is-invalid':addressForm.controls['pb'].touched && addressForm.controls['pb'].invalid}" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="addressForm.controls['pb'].errors?.['required']"> zip code required</span>
+        <span *ngIf="addressForm.controls['pb'].errors?.['min']"> zip code not for France</span>
+      </div>
+
+      <label for="city">city</label>
+      <input type="text" formControlName="city" class="form-control"
+        [ngClass]="{'is-invalid':addressForm.controls['city'].touched && addressForm.controls['city'].invalid}" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="addressForm.controls['city'].errors?.['required']"> city required</span>
+        <span *ngIf="addressForm.controls['city'].errors?.['minlength']"> city length invalid</span>
+      </div>
+
+      <label for="country">country</label>
+      <input type="text" formControlName="country" class="form-control"
+        [ngClass]="{'is-invalid':addressForm.controls['country'].touched && addressForm.controls['country'].invalid}" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="addressForm.controls['country'].errors?.['required']"> country required</span>
+        <span *ngIf="addressForm.controls['country'].errors?.['minlength']"> country length very short</span>
+        <span *ngIf="addressForm.controls['country'].errors?.['maxlength']"> country length very long</span>
+      </div>
+
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-outline-primary">save</button>
+      </div>
+    </form>
+  </ng-container>
+</p-card>

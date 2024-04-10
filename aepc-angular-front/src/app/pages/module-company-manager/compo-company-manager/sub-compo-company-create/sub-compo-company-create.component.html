@@ -1,0 +1,56 @@
+<p-card header="Address informations" [style]="{width: '800px'}">
+  <p-messages key="added" />
+  <p-messages key="rejected" />
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <form #companyForm="ngForm" (ngSubmit)="onCompanyCreate()">
+      <label for="name">company name</label>
+      <input type="text" class="form-control" name="name" #name="ngModel" [(ngModel)]="company.name" [ngClass]="{
+            'is-invalid': name.touched && name.invalid
+          }" required minlength="4" maxlength="20" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="name.errors?.['required']">required</span>
+        <span *ngIf="name.errors?.['minlength']">very short company name</span>
+        <span *ngIf="name.errors?.['maxlength']">too long company name</span>
+      </div>
+
+      <label for="type">type of company</label>
+      <select class="form-control" required name="type" #type="ngModel" [(ngModel)]="company.type">
+        <option *ngFor="let type of types | keyvalue" [ngValue]="type.key">
+          {{ type.value }}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="type.errors?.['required']">required</span>
+      </div>
+
+      <label for="agency">agency</label>
+      <input type="text" class="form-control" name="agency" #agency="ngModel" [(ngModel)]="company.agency" [ngClass]="{
+            'is-invalid': agency.touched && agency.invalid
+          }" required />
+
+      <div class="invalid-feedback">
+        <span *ngIf="agency.errors?.['required']"> required</span>
+      </div>
+
+      <label for="addressId">Address of company</label>
+      <select name="addressId" class="form-control" #addressId="ngModel" [(ngModel)]="company.addressId">
+        <option *ngFor="let addressMap of addressesMap | keyvalue" [ngValue]="addressMap.key">
+          {{addressMap.value}}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="addressId.errors?.['required']">address is required</span>
+      </div>
+
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="companyForm.invalid">
+          save
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</p-card>

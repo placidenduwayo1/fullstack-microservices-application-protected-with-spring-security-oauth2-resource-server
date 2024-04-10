@@ -1,0 +1,11 @@
+<p-card>
+  <button class="btn btn-outline-info" (click)="onPrintEmployees()">
+    employees
+  </button>
+  &nbsp;
+  {{nbrEmployees}}
+
+  <app-sub-compo-employee-printer [employeesList]="employeesList"
+    (nbEmployeesEventEmitter)="printNbrEmployees($event)" />
+
+</p-card>

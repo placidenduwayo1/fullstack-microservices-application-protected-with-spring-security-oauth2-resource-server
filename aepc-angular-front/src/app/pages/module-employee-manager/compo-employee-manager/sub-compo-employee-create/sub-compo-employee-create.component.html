@@ -1,0 +1,71 @@
+<p-card header="Address informations" [style]="{width: '800px'}">
+  <p-messages key="added" />
+  <p-messages key="rejected" />
+  <ng-container>
+    <p-confirmDialog [style]="{width: '20vw'}" />
+    <form [formGroup]="employeeForm" (ngSubmit)="onSaveEmployeeFormData()">
+
+      <label for="firstname">firstname</label>
+      <input type="text" class="form-control" formControlName="firstname" [ngClass]="{
+              'is-invalid':
+                employeeForm.controls['firstname'].touched &&
+                employeeForm.controls['firstname'].invalid
+            }" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="employeeForm.controls['firstname'].errors?.['required']">
+          firstname is required</span>
+      </div>
+
+      <label for="lastname">lastname</label>
+      <input type="text" class="form-control" formControlName="lastname" [ngClass]="{
+              'is-invalid':
+                employeeForm.controls['lastname'].touched &&
+                employeeForm.controls['lastname'].invalid
+            }" />
+
+      <div class="invalid-feedback">
+        <span *ngIf="employeeForm.controls['lastname'].errors?.['required']">lastname is required</span>
+      </div>
+
+      <label for="state">State </label>
+      <select formControlName="state" class="form-control">
+        <option *ngFor="let state of states | keyvalue" [ngValue]="state.value">
+          {{ state.value }}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="employeeForm.controls['state'].errors?.['required']">state is required</span>
+      </div>
+
+      <label for="role">Role </label>
+      <select formControlName="role" class="form-control">
+        <option *ngFor="let role of roles | keyvalue" [ngValue]="role.value">
+          {{ role.value }}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="employeeForm.controls['role'].errors?.['required']">type is required</span>
+      </div>
+
+      <label for="addressId">Address</label>
+      <select formControlName="addressId" class="form-control">
+        <option *ngFor="let addressMap of addressesMap | keyvalue" [ngValue]="addressMap.key">
+          {{addressMap.value}}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        <span *ngIf="employeeForm.controls['addressId'].errors?.['required']">address is required</span>
+      </div>
+
+      <div class="text-center mt-2">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="employeeForm.invalid">
+          save
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</p-card>

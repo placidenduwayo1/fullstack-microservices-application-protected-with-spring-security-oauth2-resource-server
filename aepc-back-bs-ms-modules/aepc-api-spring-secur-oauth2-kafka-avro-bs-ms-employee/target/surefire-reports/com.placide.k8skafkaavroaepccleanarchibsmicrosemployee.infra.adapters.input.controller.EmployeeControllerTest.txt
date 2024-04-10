@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.placide.k8skafkaavroaepccleanarchibsmicrosemployee.infra.adapters.input.controller.EmployeeControllerTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.213 s -- in com.placide.k8skafkaavroaepccleanarchibsmicrosemployee.infra.adapters.input.controller.EmployeeControllerTest

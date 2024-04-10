@@ -1,0 +1,159 @@
+services:
+
+#-------------- database instance-------------------
+  mysql-db-instance:
+    image: mysql:8.0
+    container_name: mysql-db-instance
+    ports:
+      - "3306:3306"
+    networks:
+      - stack-appli-net
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-proot" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - persistence-dbs:/var/lib/mysql
+    restart: no
+
+#-------------- kafka infrastructure -------------------
+# zookeeper
+  zookeeper:
+    image: zookeeper:3.4.9
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - stack-appli-net
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: no
+  
+  #kafka brokers
+  kafka-broker-1:
+    image: obsidiandynamics/kafka
+    container_name: kafka-broker-1
+    networks:
+      - stack-appli-net
+    ports:
+      - "9092:9092"
+      - "19092:19092"
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:19092,PLAINTEXT_HOST://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:19092,PLAINTEXT_HOST://localhost:9092
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    healthcheck:
+      test: nc -z localhost 19092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    restart: always
+
+  kafka-broker-2:
+    image: obsidiandynamics/kafka
+    container_name: kafka-broker-2
+    networks:
+      - stack-appli-net
+    ports:
+      - "9093:9093"
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:29092,PLAINTEXT_HOST://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-2:29092,PLAINTEXT_HOST://localhost:9093
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    healthcheck:
+      test: nc -z localhost 29092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    restart: no
+
+  kafka-broker-3:
+    image: obsidiandynamics/kafka
+    container_name: kafka-broker-3
+    networks:
+      - stack-appli-net
+    ports:
+      - "9094:9094"
+      - "39092:39092"
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_LISTENERS: PLAINTEXT://:39092,PLAINTEXT_HOST://0.0.0.0:9094
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-3:39092,PLAINTEXT_HOST://localhost:9094
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    healthcheck:
+      test: nc -z localhost 39092 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    restart: no
+
+  # schema registry for avro serialization
+  schema-registry-service:
+    image: confluentinc/cp-schema-registry:5.4.0
+    container_name: schema-registry-service
+    depends_on:
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry-service
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-broker-1:19092,kafka-broker-2:29092,kafka-broker-3:39092
+    networks:
+      - stack-appli-net
+    restart: no
+    # kafdrob interface
+  kafdrop-ui:
+    image: obsidiandynamics/kafdrop
+    container_name: kafdrop-ui
+    ports:
+      - "9000:9000"
+    environment:
+      KAFKA_BROKERCONNECT: kafka-broker-1:19092,kafka-broker-2:29092,kafka-broker-3:39092
+    depends_on:
+      kafka-broker-1:
+        condition: service_healthy
+      kafka-broker-2:
+        condition: service_healthy
+      kafka-broker-3:
+        condition: service_healthy
+    networks:
+      - stack-appli-net
+    restart: no
+networks:
+  stack-appli-net:
+volumes:
+  persistence-dbs:

@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.placide.k8skafkaavroaepccleanarchibsmicroscompany.infra.adapters.output.services.OutputKafkaProducerServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 26.11 s -- in com.placide.k8skafkaavroaepccleanarchibsmicroscompany.infra.adapters.output.services.OutputKafkaProducerServiceImplTest
