@@ -79,8 +79,14 @@ export class MenuComponent implements OnInit {
       {
         label: 'Users', icon: 'pi pi-list',
         items: [
-          { label: 'users', icon: 'pi pi-user', command: () => this.router.navigateByUrl("session/users-management") },
-          {label: 'users', icon:'pi pi-plus-circle', command: ()=>console.log('create new user')}
+          { 
+            label: 'users', icon: 'pi pi-user', 
+            command: () => this.router.navigateByUrl('session/users-management')
+          },
+          {
+            label: 'users', icon:'pi pi-plus-circle', 
+            command: ()=>console.log('create new user')
+          }
         ]
       },
       {

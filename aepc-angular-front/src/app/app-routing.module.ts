@@ -41,10 +41,9 @@ const routes: Routes = [
             .then(m => m.ModuleProjectManagerModule)
       },
       {
-        path:'users-management',
-        loadChildren: ()=>import('./pages/module-user-manager/module-user-manager.module')
-        .then(m=>m.ModuleUserManagerModule)
-
+        path: 'users-management',
+        loadChildren: () => import('./pages/users-manager/users-manager.module')
+          .then(m => m.UsersManagerModule)
       }
     ]
   },
