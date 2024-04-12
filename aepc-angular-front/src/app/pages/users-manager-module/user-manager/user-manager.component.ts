@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { UserAuthenticationService } from 'src/app/shared/services/auth-service/authentication.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-manager',
@@ -7,11 +7,11 @@ import { UserAuthenticationService } from 'src/app/shared/services/auth-service/
   styleUrls: ['./user-manager.component.scss']
 })
 export class UserManagerComponent implements OnInit {
-  private usersAuthService = inject(UserAuthenticationService);
+  private activatedRoute = inject(ActivatedRoute);
   users!: Array<any>
   ngOnInit(): void {
-    this.usersAuthService.getUsers().subscribe((data:Array<any>)=>{
-      this.users = data;
+    this.activatedRoute.data.subscribe((data)=>{
+      this.users = data['getAllUsers'];
       console.log(this.users)
     })
   }

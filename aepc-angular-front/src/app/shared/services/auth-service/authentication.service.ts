@@ -31,7 +31,6 @@ export class UserAuthenticationService {
             tap((data: any) => {
                 const access_token: string = data['access-token'];
                 this.setToken(access_token);
-                const decodedJwt: any = jwtDecode(access_token);
             })
         );
     }

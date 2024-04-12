@@ -44,10 +44,6 @@ const routes: Routes = [
         path: 'users-management',
         loadChildren: () => import('./pages/users-manager-module/users-manager.module')
           .then(m => m.UsersManagerModule)
-      },
-      {
-        path: 'unauthorized', loadChildren: () => import('./pages/authorization-module/unauthorized.module')
-          .then(m => m.ErrorPageModule)
       }
     ]
   },

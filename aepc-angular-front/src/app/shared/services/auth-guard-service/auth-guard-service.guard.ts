@@ -10,6 +10,7 @@ export const authenticationGuardService: CanActivateFn = () => {
     if (!authService.getJwtExpiration(jwtToken)) {
       return true;
     }
+    console.log('---------------------- token has expired-----------------------');
     authService.logout();
     return false;
   }
@@ -21,14 +22,11 @@ export const authenticationGuardService: CanActivateFn = () => {
 
 export const authorizationGuardService: CanActivateFn = () => {
   const authService = inject(UserAuthenticationService);
-  const router = inject(Router);
   const jwtToken = authService.getToken();
   const decodedJwt: any = authService.getDecodedJwt(jwtToken);
   if (decodedJwt.scope.includes("ADMIN") || decodedJwt.scope.includes("HR")) {
     return true;
   }
-  console.log("you do not have right to do this task")
-  router.navigateByUrl('session/unauthorized');
   return false;
 }
 
