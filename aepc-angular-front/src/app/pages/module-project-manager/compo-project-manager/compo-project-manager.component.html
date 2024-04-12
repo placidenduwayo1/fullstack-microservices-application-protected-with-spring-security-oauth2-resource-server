@@ -1,8 +1,3 @@
-<p-card>
-  <button class="btn btn-outline-info" (click)="onPrintProjects()">
-    projects
-  </button>
-  &nbsp;
-  {{nbrOfProjects}}
+<p-card header="{{nbrOfProjects}}">
   <app-sub-compo-project-printer [projects]="projects" (eventEmiter)="printNumberOfProjects($event)" />
 </p-card>

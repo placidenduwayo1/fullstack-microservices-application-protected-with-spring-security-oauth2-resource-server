@@ -6,6 +6,7 @@ import { UserAuthenticationService } from "../auth-service/authentication.servic
 export class HttpRequestAuthenticationInterceptor implements HttpInterceptor {
 
     intercept(inputRequest: HttpRequest<any>, next: HttpHandler) {
+        //on loging, jwt token is not yet generated
         if (inputRequest.url.includes('/api-auth/login')){
             return next.handle(inputRequest);
         }

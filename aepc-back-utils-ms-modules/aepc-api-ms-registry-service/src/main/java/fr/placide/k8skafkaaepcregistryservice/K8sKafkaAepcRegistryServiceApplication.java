@@ -8,7 +8,8 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @EnableEurekaServer
 public class K8sKafkaAepcRegistryServiceApplication {
 
-	public static void main(String [] args) {
+	public static void main(String [] args) throws InterruptedException {
+		Thread.sleep(5000);
 		new SpringApplication(K8sKafkaAepcRegistryServiceApplication.class)
 				.run(args);
 	}

@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AepcApiGatewayServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AepcApiGatewayServiceApplication.class, args);
+	public static void main(String[] args) throws InterruptedException {
+		SpringApplication application = new SpringApplication(AepcApiGatewayServiceApplication.class);
+		Thread.sleep(8000);
+		application.run(args);
 	}
 
 }

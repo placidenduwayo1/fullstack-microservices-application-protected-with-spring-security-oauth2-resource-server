@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { EmployeeEvent } from 'src/app/shared/models/events.model';
 import { Employee } from 'src/app/shared/models/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
@@ -12,47 +12,30 @@ import { EmployeeEventPublisher } from 'src/app/shared/services/publisher-events
   styleUrls: ['./compo-employee-manager.component.scss'],
 })
 export class CompoEmployeeManagerComponent implements OnInit {
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private employeeEventPubliser: EmployeeEventPublisher,
-    private employeeService: EmployeeService,
-    private router : Router
-  ) {}
+  
+    private activatedRoute = inject(ActivatedRoute);
+    private employeeEventPubliser= inject(EmployeeEventPublisher);
+    private employeeService = inject(EmployeeService);
+  
 
   employeesList!: Array<Employee>;
 
   nbrEmployees!: number;
-  printNbrEmployees($event: number){
+  printNbrEmployees($event: number) {
     this.nbrEmployees = $event;
   }
 
-  onPrintEmployees() {
-    this.employeeEventPubliser.publishEmployeeEvent(
-      EmployeeEvent.GET_ALL_EMPLOYEES
-    );
-  }
-
   ngOnInit(): void {
+    this.activatedRoute.data.subscribe(data =>{
+      this.employeesList = data['getAllEmployeesResolve'];
+    });
 
-    this.employeeEventPubliser.employeeEnventObservable.subscribe(
-      (employeeEvent: EmployeeEvent) => {
-
-        switch (employeeEvent) {
-          case EmployeeEvent.GET_ALL_EMPLOYEES:
-            this.activatedRoute.data.subscribe((employees) => {
-              this.employeesList = employees['getAllEmployeesResolve'];
-            });
-            console.log(employeeEvent);
-            break;
-
-          case EmployeeEvent.REFRESH:
-            this.employeeService.getAllEmployees().subscribe((employees: Array<Employee>)=>{
-              this.employeesList = employees;
-            })
-            console.log(employeeEvent);
-            break;
-        }
+    this.employeeEventPubliser.employeeEnventObservable.subscribe((event: EmployeeEvent) => {
+       if(event==EmployeeEvent.REFRESH){
+        this.employeeService.getAllEmployees().subscribe((employees: Array<Employee>) => {
+          this.employeesList = employees;
+        });
       }
-    );
+    });
   }
 }

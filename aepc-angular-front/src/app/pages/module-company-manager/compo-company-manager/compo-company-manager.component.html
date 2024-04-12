@@ -1,7 +1,4 @@
-<p-card>
-  <button class="btn btn-outline-info" (click)="onPrintCompanies()">
-    companies
-  </button> &nbsp; {{nbCompanies}}
+<p-card header="{{nbCompanies}}">
   <app-sub-compo-company-printer [companies]="companies"
     (nbrOfCompaniesEventEmitter)="getCompaniesNumber($event)"></app-sub-compo-company-printer>
 </p-card>

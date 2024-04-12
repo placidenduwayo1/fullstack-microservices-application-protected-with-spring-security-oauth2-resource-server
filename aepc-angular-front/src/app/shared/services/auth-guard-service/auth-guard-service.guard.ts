@@ -1,25 +1,34 @@
 import { inject } from "@angular/core";
 import { CanActivateFn, Router } from "@angular/router";
 import { UserAuthenticationService } from "../auth-service/authentication.service";
-import { jwtDecode } from "jwt-decode";
 
 export const authenticationGuardService: CanActivateFn = () => {
-  const router: Router = inject(Router);
-  let token = inject(UserAuthenticationService).getToken();
-  if (token) {
-    let decodedJwt = jwtDecode(token);
-    const expiredToken = (decodedJwt && decodedJwt.exp) ? decodedJwt.exp < Date.now()/1000: false ;
-    if(expiredToken){
-      console.log("--------------------------- token is expired");
-      router.navigateByUrl('');
-      return false;
-    }
-    else {
+
+  const authService = inject(UserAuthenticationService);
+  const jwtToken = authService.getToken();
+  if (jwtToken) {
+    if (!authService.getJwtExpiration(jwtToken)) {
       return true;
     }
+    authService.logout();
+    return false;
   }
   else {
-    router.navigateByUrl('');
+    authService.logout();
     return false;
   }
 }
+
+export const authorizationGuardService: CanActivateFn = () => {
+  const authService = inject(UserAuthenticationService);
+  const router = inject(Router);
+  const jwtToken = authService.getToken();
+  const decodedJwt: any = authService.getDecodedJwt(jwtToken);
+  if (decodedJwt.scope.includes("ADMIN") || decodedJwt.scope.includes("HR")) {
+    return true;
+  }
+  console.log("you do not have right to do this task")
+  router.navigateByUrl('session/unauthorized');
+  return false;
+}
+

@@ -95,7 +95,7 @@ public class SecurityOauth2ResourceServerConfig {
                 .authorizeHttpRequests(authReq -> authReq.requestMatchers(
                                 "/api-auth/users/**",
                                 "/api-auth/roles/**")
-                        .hasAnyAuthority("SCOPE_ADMIN", "SCOPE_HR", "SCOPE_MANAGER"))
+                        .hasAnyAuthority("SCOPE_ADMIN", "SCOPE_HR"))
                 .authorizeHttpRequests(authReq -> authReq.anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return httpSecurity.build();

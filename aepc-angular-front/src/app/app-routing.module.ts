@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppSessionComponent } from './pages/app-session/app-session.component';
-import { authenticationGuardService } from './shared/services/auth-guard-service/auth-guard-service.guard';
+import { authenticationGuardService, authorizationGuardService } from './shared/services/auth-guard-service/auth-guard-service.guard';
 
 
 const routes: Routes = [
@@ -17,33 +17,37 @@ const routes: Routes = [
           .then(module => module.ModuleAccueilModule)
       },
       {
-        path: 'addresses-management',
+        path: 'addresses-management', canActivate:[authorizationGuardService],
         loadChildren:
           () => import('./pages/module-address-manager/module-address-manager.module')
             .then(m => m.ModuleAddressManagerModule)
       },
       {
-        path: 'companies-management',
+        path: 'companies-management', canActivate:[authorizationGuardService],
         loadChildren:
           () => import('./pages/module-company-manager/module-company-manager.module')
             .then(m => m.ModuleCompanyManagerModule)
       },
       {
-        path: 'employees-management',
+        path: 'employees-management', canActivate:[authorizationGuardService],
         loadChildren:
           () => import('./pages/module-employee-manager/module-employee-manger.module')
             .then(m => m.ModuleEmployeeManagerModule)
       },
       {
-        path: 'projects-management',
+        path: 'projects-management', canActivate:[authorizationGuardService],
         loadChildren:
           () => import('./pages/module-project-manager/module-project-manager.module')
             .then(m => m.ModuleProjectManagerModule)
       },
       {
         path: 'users-management',
-        loadChildren: () => import('./pages/users-manager/users-manager.module')
+        loadChildren: () => import('./pages/users-manager-module/users-manager.module')
           .then(m => m.UsersManagerModule)
+      },
+      {
+        path: 'unauthorized', loadChildren: () => import('./pages/authorization-module/unauthorized.module')
+          .then(m => m.ErrorPageModule)
       }
     ]
   },

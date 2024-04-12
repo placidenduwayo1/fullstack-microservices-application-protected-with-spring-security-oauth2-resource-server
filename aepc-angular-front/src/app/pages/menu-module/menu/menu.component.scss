@@ -1,0 +1,11 @@
+:host ::ng-deep .p-menubar { 
+	border: .5px gray; 
+	border-style: solid; 
+	border-radius: 5px; 
+	box-shadow: 0px 4px 6px 0px rgb(165, 170, 160)
+} 
+
+:host ::ng-deep .p-menuitem { 
+	background-color: rgb(157, 173, 140); 
+	margin: 12px; 
+}

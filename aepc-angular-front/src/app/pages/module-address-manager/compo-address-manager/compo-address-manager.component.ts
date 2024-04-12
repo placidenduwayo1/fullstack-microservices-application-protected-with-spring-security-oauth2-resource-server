@@ -14,28 +14,23 @@ export class CompoAddressPrinterComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private addressEventPubliser : AddressEventPublisher,
+    private addressEventPubliser: AddressEventPublisher,
     private addressService: AddressService,
     private router: Router) { }
 
   addressesList!: Array<Address>;
-  nbAddresses!:number;
+  nbAddresses!: number;
 
-  onPrintNbrOfAddresses($event: number){
+  onPrintNbrOfAddresses($event: number) {
     this.nbAddresses = $event;
   }
 
   ngOnInit(): void {
-    this.addressEventPubliser.addressEventObservable.subscribe((event: AddressEvent)=>{
-      switch(event){
-
-        case AddressEvent.GET_ALL_ADDRESSES:
-          this.activatedRoute.data.subscribe(addresses=>{
-            this.addressesList = addresses["getAllAddressesResolve"];
-            console.log(event)
-          });
-          console.log(event);
-          break;
+    this.activatedRoute.data.subscribe(adresses=>{
+      this.addressesList= adresses['getAllAddressesResolve'];
+    });
+    this.addressEventPubliser.addressEventObservable.subscribe((event: AddressEvent) => {
+      switch (event) {
 
         case AddressEvent.CREATE_ADDRESS_FORM:
           console.log(event);
@@ -43,19 +38,19 @@ export class CompoAddressPrinterComponent implements OnInit {
           break;
 
         case AddressEvent.REFRESH:
-          this.addressService.getAllAddresses().subscribe((addresses: Array<Address>)=>{
-            this.addressesList=addresses
+          this.addressService.getAllAddresses().subscribe((addresses: Array<Address>) => {
+            this.addressesList = addresses
           });
           break;
       }
     });
   }
 
-  onPrintAddresses(){
+  onPrintAddresses() {
     this.addressEventPubliser.publishAddressEvent(AddressEvent.GET_ALL_ADDRESSES)
   }
 
-  onCreateAddress(){
+  onCreateAddress() {
     this.addressEventPubliser.publishAddressEvent(AddressEvent.CREATE_ADDRESS_FORM);
   }
 }
