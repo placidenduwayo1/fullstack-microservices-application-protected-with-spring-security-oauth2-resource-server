@@ -10,7 +10,6 @@ export enum EmployeeEvent {
   PROJECTS_ASSIGNEDTO_EMPLOYEE = "[Project] PROJECTS ASSIGNEDTO EMPLOYEE"
 }
 
-
 export enum AddressEvent {
   GET_ALL_ADDRESSES = '[Address] GET ALL ADDRESSES EVENT',
   CREATE_ADDRESS_FORM = '[Address] CREATE ADDRESS FORM EVENT',
@@ -22,9 +21,6 @@ export enum AddressEvent {
   REFRESH = '[Address] REFRESH LIST OF ADDRESSES EVENT',
   EMPLOYEES_AT_ADDRESS = "[Employees] EMPLOYEES LIVING AT ADDRESS"
 }
-
-
-
 
 export enum CompanyEvent {
   GET_ALL_COMPANIES = '[Company] GET ALL COMPANIES EVENT',
@@ -44,4 +40,12 @@ export enum ProjectEvent {
   UPDATE_PROJECT = '[Project]  UPDATE PROJECT EVENT',
   PROJECT_DELETED = '[Project] PROJECT DELETED EVENT"',
   REFRESH = '[Project] REFRESH LIST OF PROJECTS EVENT',
+}
+
+export enum UserEvent {
+  LOGIN = "LOGIN EVENT",
+  SAVE_USER = "[User] SAVE USER EVENT",
+  ADD_ROLE_TO_USER = "[User] ADD ROLE TOUSER",
+  DELETE_USER = "[User] DELETE USER",
+  REFRESH = "REFRESH EVENT",
 }

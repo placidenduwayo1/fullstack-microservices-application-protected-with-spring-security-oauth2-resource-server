@@ -1,9 +1,9 @@
-<p-card class="mt-4" [style]="{width: 'fit-content'}">
+<p-card header="{{formatedDecodedJwt.username}} informations" [style]="{width: 'fit-content'}">
     <ul>
-        <li>Auth Generator: <span style="color: brown;"> {{formatedDecodedJwt.iss}}</span> </li>
         <li>Username: <span style="color: brown;"> {{formatedDecodedJwt.username}}</span> </li>
         <li>Authorities: <span style="color: brown;"> {{formatedDecodedJwt.roles}}</span> </li>
         <li>Expire At: <span style="color: brown;"> {{formatedDecodedJwt.exp| date:'dd-MM-yyyy hh:mm'}} </span></li>
         <li>Issued At: <span style="color: brown;"> {{formatedDecodedJwt.iat| date:'dd-MM-yyyy hh:mm'}} </span></li>
+        <li>Generator: <span style="color: brown;"> {{formatedDecodedJwt.iss | titlecase}}</span> </li>
     </ul>
 </p-card>

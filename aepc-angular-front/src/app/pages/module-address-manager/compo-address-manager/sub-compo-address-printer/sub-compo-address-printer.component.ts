@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AddressService } from '../../../../shared/services/rest-services/addresses.service';
 import { Address } from '../../../../shared/models/address/address.model';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { AddressEvent } from 'src/app/shared/models/events.model';
-import { AddressEventPublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
+import { AddressEvent } from 'src/app/shared/models/events/events.model';
+import { AddressEventServicePublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -20,17 +20,17 @@ export class SubCompoAddressPrinterComponent implements OnInit {
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
 
-  private addressEventPublisher: AddressEventPublisher = inject(AddressEventPublisher);
+  private addressEventPublisher: AddressEventServicePublisher = inject(AddressEventServicePublisher);
   private router: Router = inject(Router);
 
   ngOnInit(): void {
     this.addressEventPublisher.addressEventObservable.subscribe((addressEvent: AddressEvent) => {
       switch (addressEvent) {
         case AddressEvent.EMPLOYEES_AT_ADDRESS:
-          this.router.navigateByUrl('session/addresses-management/employees-at-address/' + this.addressEmployeesRelated);
+          this.router.navigateByUrl(`session/addresses-management/employees-at-address/${this.addressEmployeesRelated}`);
           break;
         case AddressEvent.UPDATE_ADDRESS:
-          this.router.navigateByUrl('session/addresses-management/address-form-update/' + this.addressId);
+          this.router.navigateByUrl(`session/addresses-management/address-form-update/${this.addressId}`);
           break;
         case AddressEvent.DELETE_ADDRESS:
           this.confirmationService.confirm({
@@ -74,7 +74,7 @@ export class SubCompoAddressPrinterComponent implements OnInit {
     this.addressEventPublisher.publishAddressEvent(AddressEvent.UPDATE_ADDRESS);
   }
 
-  onAddressDelete(addressId: string, $event: Event) {
+  onAddressDelete(addressId: string) {
     this.addressId = addressId;
     this.addressEventPublisher.publishAddressEvent(AddressEvent.DELETE_ADDRESS);
   }

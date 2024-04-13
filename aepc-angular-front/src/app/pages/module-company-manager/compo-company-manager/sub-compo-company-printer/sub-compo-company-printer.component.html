@@ -15,7 +15,6 @@
           <th>agency</th>
           <th>connected date</th>
           <th>address</th>
-          <th>actions</th>
           <button class="btn btn-outline-primary mt-2" *ngIf="companies"
             (click)="onPrintNumberOfCompaniesEventEmitter(companies.length)">nb companies</button>
         </tr>
@@ -37,7 +36,6 @@
               </li>
             </ul>
           </td>
-          <td>
             <button class="btn">
               <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onCompanyUpdate(company)"></i>
             </button>
@@ -48,7 +46,6 @@
               <i class="fa fa-list" style="color: mediumturquoise" (click)="onPrintProjectsRelated(company.companyId)">
                 projects</i>
             </button>
-          </td>
         </tr>
       </ng-template>
     </p-table>

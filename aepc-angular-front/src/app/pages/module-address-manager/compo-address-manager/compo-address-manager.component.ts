@@ -1,9 +1,9 @@
 import { AddressService } from '../../../shared/services/rest-services/addresses.service';
 import { Address } from '../../../shared/models/address/address.model';
-import { AddressEvent } from '../../../shared/models/events.model';
+import { AddressEvent } from '../../../shared/models/events/events.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AddressEventPublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
+import { AddressEventServicePublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
 
 @Component({
   selector: 'app-compo-address-manager',
@@ -14,7 +14,7 @@ export class CompoAddressPrinterComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private addressEventPubliser: AddressEventPublisher,
+    private addressEventPubliser: AddressEventServicePublisher,
     private addressService: AddressService,
     private router: Router) { }
 

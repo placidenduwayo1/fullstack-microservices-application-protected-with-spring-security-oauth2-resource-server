@@ -1,7 +1,14 @@
 import { inject } from "@angular/core";
-import { ResolveFn } from "@angular/router";
-import { UserAuthenticationService } from "../../auth-service/authentication.service";
+import { ActivatedRoute, ResolveFn } from "@angular/router";
+import {  } from "../../app-user-service/authentication.service";
+import { UsersManagementService } from "../../app-user-service/users.service";
+import { AppUser } from "src/app/shared/models/user-auth/user.model";
 
-export const usersRouteResolve : ResolveFn<Array<any>> = ()=>{
-    return inject(UserAuthenticationService).getUsers();
+export const GetAllUsersResolve : ResolveFn<Array<AppUser>> = ()=>{
+    return inject(UsersManagementService).getUsers();
+}
+
+export const GetUserResolve : ResolveFn<AppUser> = ()=>{
+    const userId = inject(ActivatedRoute).snapshot.params['userId'];
+    return inject(UsersManagementService).getUser(userId);
 }

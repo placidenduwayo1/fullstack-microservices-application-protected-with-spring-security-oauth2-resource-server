@@ -1,9 +1,9 @@
-  <div class="row">
-    <div class="col">
-    <p-card header="welcome to microservices base application demo" class="flex justify-content-left" [style]="{width: '770px'}">
+<div class="row">
+  <div class="col">
+    <p-card header="welcome to microservices based application" [style]="{width: 'fit-content'}">
       <ul>
-        <li>amazing microservices applications compared to monolithic applications</li>
-        <li> here are the application demo with apis business microservices
+        <li><span style="color: #0000ff;">microservices based applications</span> are attractive compared with <span style="color: #0000ff;">monolithic</span> ones</li>
+        <li> here are the microservices based application demo with business microservices apis:
           <ul>
             <li><span style="color: #0000ff;">api-address</span>: to manage addresses</li>
             <li><span style="color: #0000ff;">api-company</span>: to manage companies</li>
@@ -11,42 +11,48 @@
             <li><span style="color: #0000ff;">api-project</span>: to manage projects</li>
           </ul>
         </li>
-        <li>in this demo, each api business microservices has its own dependencies: db, configurations, etc</li>
-        <li>each api business microservices of the application is implemented in clean-architecture</li>
-        <li> each couple of apis: (api-company,api-address) and (api-emmployee,api-address), (api-project,
-          api-company),(api-project, api-emmployee) communicates. That is, to validate:
+        <li>in this demo, each business microservice api has its own dependencies: db, configurations, etc</li>
+        <li>each business microservice api is implemented in clean-architecture</li>
+        <li>elements in each couples: (<span style="color: #0000ff;">company, address</span>), (<span
+            style="color: #0000ff;">employee, address</span>),
+          (<span style="color: #0000ff;">project, company</span>), (<span style="color: #0000ff;">project,
+            emmployee</span>) communicates. That is, to validate:
           <ul>
             <li>a company, api-company gets address from api-address</li>
             <li>a employee, api-employee gets address from api-address</li>
             <li>a project, api-project gets company and employee from company, employee apis</li>
-    
+
           </ul>
         </li>
-          <li> on start up each backend api microservices gets its configurations from a <span style="color: #0000ff;">api-config service</span>
+        <li><span
+          style="color: #0000ff;">api-config-service</span>: on start up each backend microservice api gets its configurations from a config service:
           <ul>
-            <li><span style="color: #0000ff;">api-address</span>: to manage addresses</li>
-            <li><span style="color: #0000ff;">api-company</span>: to manage companies</li>
-            <li><span style="color: #0000ff;">api-employee</span>: to manage employees</li>
-            <li><span style="color: #0000ff;">api-project</span>: to manage projects</li>
-            <li><span style="color: #0000ff;">api-securty-service</span>: to authenticate users'requests on the applicaton </li>
-            <li><span style="color: #0000ff;">api-registry-service</span>: to register apis with their name in a registry</li>
-            <li><span style="color: #0000ff;">api-gatway-service</span>: to route request from frontend to backend</li>
+            <li>business microservices: <span style="color: #0000ff;">api-address</span>, <span style="color: #0000ff;">api-company
+              </span>, <span style="color: #0000ff;">api-employee</span>,
+              <span style="color: #0000ff;"> api-project</span></li>
+            <li>security microservice: <span style="color: #0000ff;">api-securty-service</span>: to authenticate
+              users'requests</li>
+            <li>microservices registration service: <span style="color: #0000ff;">api-registry-service</span>: to
+              register apis with their name</li>
+            <li>gateway service <span style="color: #0000ff;">api-gatway-service</span>: stands between frontend 
+              (<span style="color: #0000ff;">Angular application</span>) and backend (<span style="color: #0000ff;">
+                microservices based application</span>)and route users' requests</li>
           </ul>
         </li>
-        <li> after they get their config, backend apis microservices register on <span style="color: #0000ff;">api-registry-service</span></li>
-        <li>a proxy api is configured to route request front (angular appli) to backend</li>
-        <li>our fronted is an angular application</li>
-        <li>each request from frontend or between apis that communicate must be authenticated
+        <li><span style="color: #0000ff;">api-registry-service</span>: when they get configurations, microservices apis register in registry</li>
+        <li><span style="color: #0000ff;">api-gatway-service</span>: we created and configured  a gateway to route angular application requests
+        </li>
+        <li><span style="color: #0000ff;">api-security-service</span>: requests from frontend or between microservices apis are authenticated:
           <ul>
-            <li>a jwt token must be provided within http request</li>
-            <li> a remote server for which destined the request decode the jwt token</li>
+            <li>a <span style="color: #0000ff;">jwt token</span> must be provided within http request</li>
+            <li> a remote servirce for which is destined the request decode the jwt token</li>
           </ul>
         </li>
-        
+        <li>we created our fronted application with angular </li>
       </ul>
     </p-card>
   </div>
-  <div class="col">
+  <p-card class="col" [style]="{width:'fit-content'}">
     <img ngSrc="assets/demo.png" width="1100" height="750" alt="microservices base application demo">
-  </div>
+  </p-card>
 </div>

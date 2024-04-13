@@ -11,6 +11,9 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordModule } from 'primeng/password';
+import { AddRoleUserComponent } from './user-manager/add-role-user/add-role-user.component';
 
 
 @NgModule({
@@ -18,7 +21,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     UserManagerComponent,
     UsersPrinterComponent,
     UserCreateComponent,
-    UserUPrintComponent
+    UserUPrintComponent,
+    AddRoleUserComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     CardModule,
     MessagesModule,
     ConfirmDialogModule,
-    TableModule
+    TableModule,
+    ReactiveFormsModule,
+    PasswordModule
   ],
   providers:[ConfirmationService, MessageService]
 })

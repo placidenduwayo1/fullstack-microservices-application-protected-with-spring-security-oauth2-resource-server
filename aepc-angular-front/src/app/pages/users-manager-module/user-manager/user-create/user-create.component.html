@@ -1,8 +1,60 @@
-<p-card header="user informations" [style]="{width:'fit-content'}">
-    <p-messages key="created"/>
-    <p-messages key="rejected"/>
+<div class=" card container mt-4" style="width: fit-content; padding: 1em;">
+
+    <h4> user informations </h4>
+    <p-messages key="create"/>
+    <p-messages key="reject"/>
     <ng-container>
         <p-confirmDialog [style]="{width:'20wv'}"/>
+        <form [formGroup]="userForm">
+
+            <div class="p-float-label mt-2">
+                <input pInputText id="firstname" formControlName="firstname" [ngClass]="{'is-invalid':
+                userForm.get('firstname')?.touched && userForm.get('firstname')?.invalid}" class="form-control" />
+                <label for="firstname">input your username</label>
+    
+                <div class="invalid-feedback">
+                    <span *ngIf="userForm.controls['firstname'].errors?.['required']">required</span>
+                </div>
+            </div>
+    
+            <div class="p-float-label mt-2">
+                <input pInputText id="lastname" formControlName="lastname" [ngClass]="{'is-invalid':
+                userForm.get('lastname')?.touched && userForm.get('lastname')?.invalid}" class="form-control" />
+                <label for="lastname">input your username</label>
+    
+                <div class="invalid-feedback">
+                    <span *ngIf="userForm.controls['lastname'].errors?.['required']">required</span>
+                </div>
+            </div>
+            
+            <div class="p-float-label mt-2">
+                <p-password id="pwd" formControlName="pwd" [toggleMask]="true" [style]="{'width':'100%'}"[inputStyle]="{'width':'100%'}"
+                [ngClass]="{'is-invalid':userForm.get('pwd')?.touched && userForm.get('pwd')?.invalid}" />
+    
+                <label for="lastname">input your pwd</label>
+    
+                <div class="invalid-feedback">
+                    <span *ngIf="userForm.controls['pwd'].errors?.['required']">required</span>
+                </div>
+            </div>
+    
+            <div class="p-float-label mt-2">
+                <p-password id="pwdConfirm" formControlName="pwdConfirm" [toggleMask]="true" [style]="{'width':'100%'}"[inputStyle]="{'width':'100%'}"
+                [ngClass]="{'is-invalid':userForm.get('pwdConfirm')?.touched && userForm.get('pwdConfirm')?.invalid}" />
+    
+                <label for="pwdConfirm">confirm your pwd</label>
+    
+                <div class="invalid-feedback">
+                    <span *ngIf="userForm.controls['pwdConfirm'].errors?.['required']">required</span>
+                </div>
+            </div>
+    
+            <div class="text-center mt-2">
+                <button type="submit" class="btn btn-outline-primary" (click)="onCreate()">
+                    create
+                </button>
+            </div>
+        </form>
     </ng-container>
 
-</p-card>
+</div>

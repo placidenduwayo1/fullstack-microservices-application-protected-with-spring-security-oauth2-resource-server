@@ -1,9 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { ProjectEvent } from 'src/app/shared/models/events.model';
+import { ProjectEvent } from 'src/app/shared/models/events/events.model';
 import { Project } from 'src/app/shared/models/project/project.model';
 import { ProjectService } from 'src/app/shared/services/rest-services/projects.service';
-import { ProjectEventPublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
+import { ProjectEventServicePublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
 
 @Component({
   selector: 'app-compo-project-manager',
@@ -13,7 +13,7 @@ import { ProjectEventPublisher } from 'src/app/shared/services/publisher-events-
 export class CompoProjectManagerComponent implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
-  private projectEventPublisher = inject(ProjectEventPublisher);
+  private projectEventPublisher = inject(ProjectEventServicePublisher);
   private projectService = inject(ProjectService);
 
   projects!: Array<Project>;

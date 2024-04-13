@@ -67,4 +67,12 @@ public class SecurityController {
     public ResponseEntity<Map<String, Object>> generateToken(@RequestBody DtoToken dtoToken) {
         return jwtService.generateToken(dtoToken);
     }
+    @DeleteMapping(value = "/users/id/{userId}")
+    public void deleteUser(@PathVariable(name = "userId") Long userId) throws AppUserNotFoundException {
+        appService.deleteUser(userId);
+    }
+    @GetMapping(value = "/users/id/{userId}")
+    public AppUser getUserById(@PathVariable(name = "userId") Long userId) throws AppUserNotFoundException {
+        return appService.getUserById(userId);
+    }
 }

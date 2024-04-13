@@ -69,7 +69,7 @@ public class JWTGeneratorServiceImp implements JWTGeneratorService {
         JwtClaimsSet jwtClaimsSet1 = JwtClaimsSet.builder()
                 .subject(subject)
                 .issuedAt(instant)
-                .expiresAt(instant.plus(dtoToken.isWithRefreshToken() ? ACCESS_TOKEN : REFRESH_TOKEN, ChronoUnit.SECONDS))
+                .expiresAt(instant.plus(dtoToken.isWithRefreshToken() ? ACCESS_TOKEN : REFRESH_TOKEN, ChronoUnit.MINUTES))
                 .issuer(issuer)
                 .claim("scope", roles)
                 .build();
@@ -80,7 +80,7 @@ public class JWTGeneratorServiceImp implements JWTGeneratorService {
                     .subject(subject)
                     .issuer(issuer)
                     .issuedAt(instant)
-                    .expiresAt(instant.plus(REFRESH_TOKEN, ChronoUnit.SECONDS))
+                    .expiresAt(instant.plus(REFRESH_TOKEN, ChronoUnit.MINUTES))
                     .build();
             String jwtRefreshToken = jwtEncoder.encode(JwtEncoderParameters.from(jwtClaimsSet2)).getTokenValue();
             tokensId.put("refresh-token", jwtRefreshToken);

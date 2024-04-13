@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Company } from '../../../../shared/models/company/company.model';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { CompanyEvent } from 'src/app/shared/models/events.model';
+import { CompanyEvent } from 'src/app/shared/models/events/events.model';
 import { CompanyService } from 'src/app/shared/services/rest-services/companies.service';
-import { CompanyEventPublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
+import { CompanyEventServicePublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -13,7 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class SubCompoCompanyPrinterComponent implements OnInit {
 
-  private companyEventPublisher: CompanyEventPublisher = inject(CompanyEventPublisher);
+  private companyEventPublisher: CompanyEventServicePublisher = inject(CompanyEventServicePublisher);
   private companyService: CompanyService = inject(CompanyService);
   private router: Router = inject(Router);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
@@ -26,11 +26,11 @@ export class SubCompoCompanyPrinterComponent implements OnInit {
     this.companyEventPublisher.companyEventObservable.subscribe((companyEvent: CompanyEvent) => {
       switch (companyEvent) {
         case CompanyEvent.UPDATE_COMPANY_FORM:
-          this.router.navigateByUrl('session/companies-management/company-update/' + this.idToUpdate);
+          this.router.navigateByUrl(`session/companies-management/company-update/${this.idToUpdate}`);
           console.log(companyEvent);
           break;
         case CompanyEvent.PROJECTS_ASSIGNEDTO_COMPANY:
-          this.router.navigateByUrl('session/companies-management/projects-assignedto-company/' + this.companyIdProjectsRelated);
+          this.router.navigateByUrl(`session/companies-management/projects-assignedto-company/${this.companyIdProjectsRelated}`);
           console.log(companyEvent);
           break;
         case CompanyEvent.COMPANY_DELETED:
@@ -75,6 +75,7 @@ export class SubCompoCompanyPrinterComponent implements OnInit {
     this.idToUpdate = company.companyId;
     this.companyEventPublisher.publishCompanyEvent(CompanyEvent.UPDATE_COMPANY_FORM)
   }
+
   private idCompanyToDelete!:string;
   onCompanyDelete(companyId: string) {
     this.idCompanyToDelete = companyId;

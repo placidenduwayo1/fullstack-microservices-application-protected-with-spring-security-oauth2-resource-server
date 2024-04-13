@@ -14,6 +14,7 @@
           <th>pb</th>
           <th>city</th>
           <th>country</th>
+          <th>actions</th>
           
           <button class="btn btn-outline-primary mt-2" *ngIf="addressesList"
             (click)="onPrintNbrAddressesEventEmitter(addressesList.length)">nbr addresses </button>
@@ -28,18 +29,18 @@
           <td>{{ address.pb }}</td>
           <td>{{ address.city }}</td>
           <td>{{ address.country }}</td>
-          
+          <td>
             <button class="btn">
               <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onAddressUpdate(address)"></i>
             </button>
             <button class="btn">
-              <i class="fa fa-trash" style="color: red" (click)="onAddressDelete(address.addressId, $event)"></i>
+              <i class="fa fa-trash" style="color: red" (click)="onAddressDelete(address.addressId)"></i>
             </button>
             <button class="btn">
               <i class="fa fa-list" style="color: mediumturquoise"
                 (click)="onPrintEmployeesLivigOnThisAddress(address.addressId)">employees </i>
             </button>
-          
+          </td>
         </tr>
       </ng-template>
 

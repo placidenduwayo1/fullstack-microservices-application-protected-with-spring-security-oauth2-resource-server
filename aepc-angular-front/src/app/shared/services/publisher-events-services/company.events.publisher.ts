@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { CompanyEvent } from "../../models/events.model";
+import { CompanyEvent } from "../../models/events/events.model";
 
 @Injectable({providedIn:'root'})
-export class CompanyEventPublisher {
+export class CompanyEventServicePublisher {
   private companyEventSubject: Subject<CompanyEvent> = new Subject<CompanyEvent>();
   companyEventObservable: Observable<CompanyEvent> = this.companyEventSubject.asObservable();
   publishCompanyEvent(companyEvent: CompanyEvent){

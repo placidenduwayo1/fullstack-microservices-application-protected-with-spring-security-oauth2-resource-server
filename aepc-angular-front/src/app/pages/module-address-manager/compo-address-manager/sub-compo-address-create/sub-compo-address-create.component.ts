@@ -3,8 +3,8 @@ import { Address } from '../../../../shared/models/address/address.model';
 import { AddressService } from '../../../../shared/services/rest-services/addresses.service';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressEvent } from 'src/app/shared/models/events.model';
-import { AddressEventPublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
+import { AddressEvent } from 'src/app/shared/models/events/events.model';
+import { AddressEventServicePublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
 
 @Component({
   selector: 'app-sub-compo-address-create',
@@ -18,7 +18,7 @@ export class SubCompoAddressCreateComponent implements OnInit {
   private addressService: AddressService = inject(AddressService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
-  private addressEventPublisher: AddressEventPublisher = inject(AddressEventPublisher);
+  private addressEventPublisher: AddressEventServicePublisher = inject(AddressEventServicePublisher);
 
   ngOnInit(): void {
     this.addressForm = this.formBuilder.group({

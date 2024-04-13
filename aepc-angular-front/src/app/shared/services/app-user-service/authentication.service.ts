@@ -48,10 +48,6 @@ export class UserAuthenticationService {
         this.router.navigateByUrl('');
     }
 
-    public getUsers(): Observable<Array<any>> {
-        return this.httpClient.get<any[]>(this.baseUrl + "/users");
-    }
-
     public getJwtExpiration(jwtToken: any): boolean {
         // install first jwt-decode: npm install --save jwt-decode to decode jwt token into json format
         let decodedJwt: any = jwtDecode(jwtToken);

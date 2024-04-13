@@ -3,8 +3,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Address } from 'src/app/shared/models/address/address.model';
 import { Type } from 'src/app/shared/models/company/company.type';
-import { CompanyEvent } from 'src/app/shared/models/events.model';
-import { CompanyEventPublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
+import { CompanyEvent } from 'src/app/shared/models/events/events.model';
+import { CompanyEventServicePublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
 import { AddressService } from 'src/app/shared/services/rest-services/addresses.service';
 import { CompanyService } from 'src/app/shared/services/rest-services/companies.service';
 
@@ -22,7 +22,7 @@ export class SubCompoCompanyCreateComponent  implements OnInit{
 
   private addressService: AddressService = inject(AddressService);
   private companyService: CompanyService = inject(CompanyService);
-  private companyEventPublisher:CompanyEventPublisher = inject(CompanyEventPublisher);
+  private companyEventPublisher:CompanyEventServicePublisher = inject(CompanyEventServicePublisher);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   

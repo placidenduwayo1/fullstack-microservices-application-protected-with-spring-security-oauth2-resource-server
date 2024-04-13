@@ -1,9 +1,9 @@
 import { Company } from '../../../shared/models/company/company.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { CompanyEvent } from 'src/app/shared/models/events.model';
+import { CompanyEvent } from 'src/app/shared/models/events/events.model';
 import { CompanyService } from 'src/app/shared/services/rest-services/companies.service';
-import { CompanyEventPublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
+import { CompanyEventServicePublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -14,7 +14,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class CompoCompanyManagerComponent implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
-  private companyEventPublisher = inject(CompanyEventPublisher);
+  private companyEventPublisher = inject(CompanyEventServicePublisher);
   private companyService = inject(CompanyService);
 
   companies!: Array<Company>;

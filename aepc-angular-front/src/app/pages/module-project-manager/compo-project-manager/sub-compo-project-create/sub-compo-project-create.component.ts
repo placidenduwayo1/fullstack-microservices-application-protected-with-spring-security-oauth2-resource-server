@@ -9,8 +9,8 @@ import { CompanyService } from 'src/app/shared/services/rest-services/companies.
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
 import { ProjectService } from 'src/app/shared/services/rest-services/projects.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProjectEventPublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
-import { ProjectEvent } from 'src/app/shared/models/events.model';
+import { ProjectEventServicePublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
+import { ProjectEvent } from 'src/app/shared/models/events/events.model';
 
 @Component({
   selector: 'app-sub-compo-project-create',
@@ -26,7 +26,7 @@ export class SubCompoProjectCreateComponent implements OnInit {
   private projectService: ProjectService = inject(ProjectService);
   private confirmService: ConfirmationService = inject(ConfirmationService);
   private msgService: MessageService = inject(MessageService);
-  private projectEventsPublisher: ProjectEventPublisher = inject(ProjectEventPublisher);
+  private projectEventsPublisher: ProjectEventServicePublisher = inject(ProjectEventServicePublisher);
 
 
   priorities = Priority;

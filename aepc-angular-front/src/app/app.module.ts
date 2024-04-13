@@ -10,9 +10,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MyMenuModule } from './pages/menu-module/menu.module';
-import { LoginModule } from './login/login.module';
+import { LoginLogoutModule } from './login-logout/login.module';
 import { AppSessionComponent } from './pages/app-session/app-session.component';
-import { HttpRequestAuthenticationInterceptor } from './shared/services/interceptor-serice/request-auth-interceptor.service';
+import { HttpRequestAuthenticationInterceptor } from './shared/services/interceptor-service/request-auth-interceptor.service';
 
 
 @NgModule({
@@ -26,7 +26,7 @@ import { HttpRequestAuthenticationInterceptor } from './shared/services/intercep
     MatSidenavModule,
     MatIconModule,
     BrowserAnimationsModule,
-    LoginModule,
+    LoginLogoutModule,
     MyMenuModule
   ],
   providers: [

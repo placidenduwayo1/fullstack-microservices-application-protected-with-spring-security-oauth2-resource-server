@@ -2,10 +2,10 @@ import { Company } from './../../../../shared/models/company/company.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { CompanyEvent } from 'src/app/shared/models/events.model';
+import { CompanyEvent } from 'src/app/shared/models/events/events.model';
 import { Type } from 'src/app/shared/models/company/company.type';
 import { CompanyService } from 'src/app/shared/services/rest-services/companies.service';
-import { CompanyEventPublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
+import { CompanyEventServicePublisher } from 'src/app/shared/services/publisher-events-services/company.events.publisher';
 import { Address } from 'src/app/shared/models/address/address.model';
 import { AddressService } from 'src/app/shared/services/rest-services/addresses.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -16,11 +16,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   styleUrls: ['./sub-compo-company-update.component.scss'],
 })
 export class SubCompoCompanyUpdateComponent implements OnInit {
+  
   companyForm!: FormGroup;
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private fbuilder: FormBuilder = inject(FormBuilder);
   private companyService: CompanyService = inject(CompanyService);
-  private companyEventPublisher: CompanyEventPublisher = inject(CompanyEventPublisher);
+  private companyEventPublisher: CompanyEventServicePublisher = inject(CompanyEventServicePublisher);
   private addressService: AddressService = inject(AddressService);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
@@ -48,7 +49,7 @@ export class SubCompoCompanyUpdateComponent implements OnInit {
       });
     });
     this.activatedRoute.data.subscribe(data => {
-      let company: Company = data['getCompanyByIDResolve'];
+      const company: Company = data['getCompanyByIDResolve'];
       console.log(company);
       this.companyForm = this.fbuilder.group({
         companyId: [company.companyId],

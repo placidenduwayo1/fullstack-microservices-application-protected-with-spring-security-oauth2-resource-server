@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Employee } from '../../../../shared/models/employee/employee.model';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { EmployeeEvent } from 'src/app/shared/models/events.model';
+import { EmployeeEvent } from 'src/app/shared/models/events/events.model';
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
-import { EmployeeEventPublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
+import { EmployeeEventServicePublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -17,7 +17,7 @@ export class SubCompoEmployeePrinterComponent implements OnInit {
   @Output() nbEmployeesEventEmitter: EventEmitter<number> = new EventEmitter();
 
   private employeeService: EmployeeService = inject(EmployeeService);
-  private employeeEventPublisher: EmployeeEventPublisher = inject(EmployeeEventPublisher);
+  private employeeEventPublisher: EmployeeEventServicePublisher = inject(EmployeeEventServicePublisher);
   private router: Router = inject(Router);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);

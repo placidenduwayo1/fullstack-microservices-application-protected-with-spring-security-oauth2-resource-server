@@ -3,12 +3,12 @@ import { Address } from '../../../../shared/models/address/address.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { EmployeeEvent } from 'src/app/shared/models/events.model';
+import { EmployeeEvent } from 'src/app/shared/models/events/events.model';
 import { Employee } from 'src/app/shared/models/employee/employee.model';
 import { State } from 'src/app/shared/models/employee/employee.state';
 import { EmpRole } from 'src/app/shared/models/employee/employee.role';
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
-import { EmployeeEventPublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
+import { EmployeeEventServicePublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -23,7 +23,7 @@ export class SubCompoEmployeeUpdateComponent implements OnInit {
   private fbuilder: FormBuilder = inject(FormBuilder);
   private addressService: AddressService = inject(AddressService);
   private fb: FormBuilder = inject(FormBuilder);
-  private employEventPublisher: EmployeeEventPublisher = inject(EmployeeEventPublisher);
+  private employEventPublisher: EmployeeEventServicePublisher = inject(EmployeeEventServicePublisher);
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   

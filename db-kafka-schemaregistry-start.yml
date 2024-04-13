@@ -1,6 +1,7 @@
 services:
 
 #-------------- database instance-------------------
+  # mysql
   mysql-db-instance:
     image: mysql:8.0
     container_name: mysql-db-instance
@@ -18,6 +19,21 @@ services:
     volumes:
       - persistence-dbs:/var/lib/mysql
     restart: no
+  #postgreslq
+  postgresql-db-instance:
+    image: postgres:latest
+    container_name: postgresql-db-instance
+    ports:
+      - "5432:5432"
+    networks:
+      - stack-appli-net
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+    restart: no
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+
 
 #-------------- kafka infrastructure -------------------
 # zookeeper
@@ -157,3 +173,4 @@ networks:
   stack-appli-net:
 volumes:
   persistence-dbs:
+  postgres_db:

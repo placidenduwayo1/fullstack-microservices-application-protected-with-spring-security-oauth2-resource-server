@@ -1,9 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
-import { userInfo } from 'os';
 import { MenuItem } from 'primeng/api';
-import { UserAuthenticationService } from 'src/app/shared/services/auth-service/authentication.service';
+import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
+import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.pyblisher';
 
 
 @Component({
@@ -18,6 +17,7 @@ export class MenuComponent implements OnInit {
 
   private router = inject(Router);
   private userAUthService = inject(UserAuthenticationService);
+  private userEventPublisher = inject(UserEventServicePublisher);
 
   ngOnInit(): void {
     this.items = [
@@ -89,23 +89,23 @@ export class MenuComponent implements OnInit {
         label: 'Users',
         items: [
           {
-            label: `${this.userInfo.username}`, icon:'pi pi-user',
-            command:()=>this.router.navigateByUrl('session/users-management/user-u')
+            label: `${this.userInfo.username}`, icon: 'pi pi-user',
+            command: () => this.router.navigateByUrl('session/users-management/user-u')
           },
-          { 
+          {
             label: 'users', icon: 'pi pi-user',
             command: () => this.router.navigateByUrl('session/users-management'),
             visible: this.authorized
           },
           {
-            label: 'users', icon:'pi pi-plus-circle',
-            command: ()=>this.router.navigateByUrl('session/users-management/user-create'),
+            label: 'user', icon: 'pi pi-plus-circle',
+            command: () => this.router.navigateByUrl('session/users-management/user-create'),
             visible: this.authorized
           },
         ]
       },
       {
-        label: 'logout', icon: 'my-margin-left pi pi-fw pi-sign-out',
+        label: 'logout', icon: 'my-margin-left pi pi-fw pi-power-off',
         command: () => this.logout()
       }
 
@@ -114,16 +114,16 @@ export class MenuComponent implements OnInit {
     this.activeItem = this.items[0];
   }
 
-  logout() {
+  private logout() {
     this.userAUthService.logout();
-    this.router.navigateByUrl("login")
+    this.router.navigateByUrl('logout')
   }
 
   jwtToken: any = this.userAUthService.getToken();
   decodedJwt: any = this.userAUthService.getDecodedJwt(this.jwtToken);
-  userInfo : any = {
+  userInfo: any = {
     "username": this.decodedJwt.sub,
     "roles": this.decodedJwt.scope
   }
-  authorized:boolean = this.decodedJwt.scope.includes("ADMIN","HR");
+  authorized: boolean = this.decodedJwt.scope.includes("ADMIN", "HR");
 }

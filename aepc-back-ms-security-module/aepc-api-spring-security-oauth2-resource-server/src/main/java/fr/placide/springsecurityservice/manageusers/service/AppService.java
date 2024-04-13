@@ -18,4 +18,7 @@ public interface AppService {
     Collection<AppUser> getAllUsers();
     AppUser addRoleToUser(RoleUserForm roleUserForm) throws AppUserNotFoundException, AppRoleNotFoundException, UserHasAlreadyThisRoleException;
     AppUser removeRoleFromUser(RoleUserForm roleUserForm) throws AppUserNotFoundException, AppRoleNotFoundException;
+    void deleteUser(Long userId) throws AppUserNotFoundException;
+
+    AppUser getUserById(Long userId) throws AppUserNotFoundException;
 }

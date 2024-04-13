@@ -25,7 +25,9 @@ public class AppServiceImpl implements AppService{
     private final PasswordEncoder passwordEncoder;
 
     private String buildUsername(String firstname, String lastname){
-        return firstname+"."+lastname;
+        return firstname.toLowerCase().replace(" ","-")+
+                "."+
+                lastname.toLowerCase().replace(" ","-");
     }
     private String buildEmail(String username){
         return username+"domain.fr";
@@ -113,5 +115,16 @@ public class AppServiceImpl implements AppService{
         if(role==null) throw new AppRoleNotFoundException("Role "+roleUserForm.getRole()+" not found Exception");
         user.getRoles().remove(role);
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long userId) throws AppUserNotFoundException {
+        AppUser user = getUserById(userId);
+        userRepository.delete(user);
+    }
+
+    @Override
+    public AppUser getUserById(Long userId) throws AppUserNotFoundException {
+        return userRepository.findById(userId).orElseThrow(()->new AppUserNotFoundException("User Not found Exception"));
     }
 }

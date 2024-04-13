@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from "rxjs";
-import { ProjectEvent } from "../../models/events.model";
+import { ProjectEvent } from "../../models/events/events.model";
 
 @Injectable({providedIn:'root'})
-export class ProjectEventPublisher {
+export class ProjectEventServicePublisher {
   private projectEventSubject : Subject<ProjectEvent> = new Subject<ProjectEvent>();
-  projectEventObservable: Observable<ProjectEvent> = this.projectEventSubject.asObservable();
+  public projectEventObservable: Observable<ProjectEvent> = this.projectEventSubject.asObservable();
   publishProjectEvent(projectEvent: ProjectEvent){
     this.projectEventSubject.next(projectEvent);
   }

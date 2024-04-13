@@ -1,10 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { EmployeeEvent } from 'src/app/shared/models/events.model';
+import { EmployeeEvent } from 'src/app/shared/models/events/events.model';
 import { Employee } from 'src/app/shared/models/employee/employee.model';
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
 import { test } from '@angular-devkit/core/src/virtual-fs/host';
-import { EmployeeEventPublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
+import { EmployeeEventServicePublisher } from 'src/app/shared/services/publisher-events-services/employee.events.publisher';
 
 @Component({
   selector: 'app-compo-employee-manager',
@@ -14,7 +14,7 @@ import { EmployeeEventPublisher } from 'src/app/shared/services/publisher-events
 export class CompoEmployeeManagerComponent implements OnInit {
   
     private activatedRoute = inject(ActivatedRoute);
-    private employeeEventPubliser= inject(EmployeeEventPublisher);
+    private employeeEventPubliser= inject(EmployeeEventServicePublisher);
     private employeeService = inject(EmployeeService);
   
 

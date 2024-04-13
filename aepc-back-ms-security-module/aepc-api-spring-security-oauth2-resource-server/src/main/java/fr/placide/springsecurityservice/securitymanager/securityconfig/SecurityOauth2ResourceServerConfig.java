@@ -83,19 +83,17 @@ public class SecurityOauth2ResourceServerConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(authReq -> authReq.requestMatchers(
+                        HttpMethod.POST,
+                        "/api-auth/users/**",
                         "/api-auth/login/**").permitAll())
                 .authorizeHttpRequests(
                         authReq->authReq.requestMatchers(
-                                HttpMethod.POST,
-                                        "/api-auth/users",
-                                        "/api-auth/roles",
-                                        "/api-auth/add-role-user",
-                                        "/api-auth/remove-role-user")
+                                        "/api-auth/remove-role-user/**")
                                 .hasAnyAuthority("SCOPE_ADMIN","SCOPE_HR"))
-                .authorizeHttpRequests(authReq -> authReq.requestMatchers(
-                                "/api-auth/users/**",
-                                "/api-auth/roles/**")
-                        .hasAnyAuthority("SCOPE_ADMIN", "SCOPE_HR"))
+                .authorizeHttpRequests(authReq->authReq.requestMatchers(
+                        HttpMethod.POST,
+                        "/api-auth/add-role-user/**",
+                        "/api-auth/roles/**").authenticated())
                 .authorizeHttpRequests(authReq -> authReq.anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return httpSecurity.build();

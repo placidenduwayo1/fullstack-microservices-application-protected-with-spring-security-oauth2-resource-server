@@ -10,8 +10,8 @@ import { State } from 'src/app/shared/models/project/project.state';
 import { EmployeeService } from 'src/app/shared/services/rest-services/employees.service';
 import { ProjectService } from 'src/app/shared/services/rest-services/projects.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProjectEventPublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
-import { ProjectEvent } from 'src/app/shared/models/events.model';
+import { ProjectEventServicePublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
+import { ProjectEvent } from 'src/app/shared/models/events/events.model';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class SubcompoProjectUpdateComponent implements OnInit {
   private projectService: ProjectService = inject(ProjectService);
   private confirmService: ConfirmationService = inject(ConfirmationService);
   private msgService: MessageService = inject(MessageService);
-  private projectEventPub: ProjectEventPublisher = inject(ProjectEventPublisher);
+  private projectEventPub: ProjectEventServicePublisher = inject(ProjectEventServicePublisher);
   priorities = Priority;
   states = State;
 

@@ -1,9 +1,9 @@
 import { Router } from '@angular/router';
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Project } from 'src/app/shared/models/project/project.model';
-import { ProjectEvent } from 'src/app/shared/models/events.model';
+import { ProjectEvent } from 'src/app/shared/models/events/events.model';
 import { ProjectService } from 'src/app/shared/services/rest-services/projects.service';
-import { ProjectEventPublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
+import { ProjectEventServicePublisher } from 'src/app/shared/services/publisher-events-services/project.events.publisher';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -14,7 +14,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class SubCompoProjectPrinterComponent implements OnInit {
 
   private projectService: ProjectService = inject(ProjectService);
-  private projectEventPublisher: ProjectEventPublisher = inject(ProjectEventPublisher);
+  private projectEventPublisher: ProjectEventServicePublisher = inject(ProjectEventServicePublisher);
   private router: Router = inject(Router);
   private confirmService: ConfirmationService = inject(ConfirmationService);
   private msgService: MessageService = inject(MessageService);

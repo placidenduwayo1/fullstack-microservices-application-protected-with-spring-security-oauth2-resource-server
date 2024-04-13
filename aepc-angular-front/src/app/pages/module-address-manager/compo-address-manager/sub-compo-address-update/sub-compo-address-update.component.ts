@@ -4,8 +4,8 @@ import { AddressService } from '../../../../shared/services/rest-services/addres
 import { Component, OnInit, inject } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Address } from 'src/app/shared/models/address/address.model';
-import { AddressEventPublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
-import { AddressEvent } from 'src/app/shared/models/events.model';
+import { AddressEventServicePublisher } from 'src/app/shared/services/publisher-events-services/address.events.publisher';
+import { AddressEvent } from 'src/app/shared/models/events/events.model';
 
 @Component({
   selector: 'app-sub-compo-address-update',
@@ -20,7 +20,7 @@ export class SubCompoAddressUpdateComponent implements OnInit {
   private confirmationService: ConfirmationService = inject(ConfirmationService);
   private messageService: MessageService = inject(MessageService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  private addressEventPublisher: AddressEventPublisher = inject(AddressEventPublisher);
+  private addressEventPublisher: AddressEventServicePublisher = inject(AddressEventServicePublisher);
 
   ngOnInit(): void {
 
