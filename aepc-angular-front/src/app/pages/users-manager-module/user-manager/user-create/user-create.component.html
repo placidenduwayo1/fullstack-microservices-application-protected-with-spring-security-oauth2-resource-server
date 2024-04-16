@@ -10,7 +10,7 @@
             <div class="p-float-label mt-2">
                 <input pInputText id="firstname" formControlName="firstname" [ngClass]="{'is-invalid':
                 userForm.get('firstname')?.touched && userForm.get('firstname')?.invalid}" class="form-control" />
-                <label for="firstname">input your username</label>
+                <label for="firstname">input your firstname</label>
     
                 <div class="invalid-feedback">
                     <span *ngIf="userForm.controls['firstname'].errors?.['required']">required</span>
@@ -20,7 +20,7 @@
             <div class="p-float-label mt-2">
                 <input pInputText id="lastname" formControlName="lastname" [ngClass]="{'is-invalid':
                 userForm.get('lastname')?.touched && userForm.get('lastname')?.invalid}" class="form-control" />
-                <label for="lastname">input your username</label>
+                <label for="lastname">input your lastname</label>
     
                 <div class="invalid-feedback">
                     <span *ngIf="userForm.controls['lastname'].errors?.['required']">required</span>

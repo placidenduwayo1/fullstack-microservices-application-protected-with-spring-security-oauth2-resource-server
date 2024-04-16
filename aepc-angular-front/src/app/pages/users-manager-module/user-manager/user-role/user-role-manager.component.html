@@ -1,0 +1,46 @@
+<div class=" card container mt-4" style="width: fit-content;">
+
+    <h4> username & role </h4>
+    <div class="flex">
+        <p-radioButton name="operation1" value="V1"  [label]="'add role to user'"  [(ngModel)]="selectedOp" (onClick)="addRoleToUser()"/> &nbsp;
+        <p-radioButton name="operation2" value="V2"   [label]="'remove role from user'"  [(ngModel)]="selectedOp" (onClick)="removeRoleFromUser()"/>&nbsp;
+        <p-radioButton name="operation3" value="V3"  inputId="radio3" [label]="'change pwd'"  [(ngModel)]="selectedOp" (onClick)="openPwdChangeUI()"/>
+    </div>
+    
+
+    <p-messages key="add" />
+    <p-messages key="reject" />
+    <p-messages key="remove"/>
+    <ng-container>
+        <p-confirmDialog [style]="{width:'20wv'}" />
+        <form [formGroup]="roleUserForm" *ngIf="roleUserForm">
+
+            <div class="mt-2">
+                <label for="username">username</label>
+                <input pInputText id="username" formControlName="username" [ngClass]="{'is-invalid':
+                roleUserForm.get('username')?.touched && roleUserForm.get('username')?.invalid}"
+                    class="form-control" />
+
+                <div class="invalid-feedback">
+                    <span *ngIf="roleUserForm.controls['username'].errors?.['required']">required</span>
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <label for="role">role</label>
+                <input pInputText id="role" formControlName="role" [ngClass]="{'is-invalid':
+                roleUserForm.get('role')?.touched && roleUserForm.get('role')?.invalid}" class="form-control"
+                    placeholder="new rôle to {{user.username}}" />
+                <div class="invalid-feedback">
+                    <span *ngIf="roleUserForm.controls['role'].errors?.['required']">required</span>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <button type="submit" class="btn btn-outline-primary" (click)="onSubmit()">
+                    Submit
+                </button>
+            </div>
+        </form>
+
+    </ng-container>
+</div>

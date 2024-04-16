@@ -4,6 +4,7 @@ import { AppUser } from "../../models/user-auth/user.model";
 import { myheaders } from "../rest-services/headers";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { RoleUserForm } from "./role-user-form.model";
 
 @Injectable({ providedIn: 'root' })
 export class UsersManagementService {
@@ -20,8 +21,8 @@ export class UsersManagementService {
     getUsers(): Observable<Array<any>> {
         return this.httpClient.get<any[]>(this.baseUrl + "/users");
     }
-    addRoleUser(username: string, role: string): Observable<any> {
-        return this.httpClient.post<AppUser>(this.baseUrl + '/add-role-user', { username, role }, { headers: myheaders });
+    addRoleUser(roleUserForm: RoleUserForm): Observable<AppUser> {
+        return this.httpClient.post<AppUser>(this.baseUrl + '/add-role-user', roleUserForm);
     }
     getAllRoles(): Observable<any> {
         return this.httpClient.get<any>(this.baseUrl + '/roles');
@@ -32,5 +33,9 @@ export class UsersManagementService {
 
     getUser(userId: any): Observable<AppUser> {
         return this.httpClient.get<AppUser>(`${this.baseUrl}/users/id/${userId}`);
+    }
+
+    removeRoleFromUser(roleUserForm: RoleUserForm): Observable<AppUser> {
+        return this.httpClient.post<AppUser>(this.baseUrl + '/remove-role-user', roleUserForm);
     }
 }

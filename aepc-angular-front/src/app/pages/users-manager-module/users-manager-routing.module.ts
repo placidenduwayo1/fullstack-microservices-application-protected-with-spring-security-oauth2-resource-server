@@ -4,7 +4,7 @@ import { UserManagerComponent } from './user-manager/user-manager.component';
 import { UserUPrintComponent } from './user-manager/user-u-print/user-u-print.component';
 import { UserCreateComponent } from './user-manager/user-create/user-create.component';
 import { GetAllUsersResolve } from 'src/app/shared/services/route-resolve-services/users-resolve/route.resolve';
-import { AddRoleUserComponent } from './user-manager/add-role-user/add-role-user.component';
+import { UserRoleManagerComponent } from './user-manager/user-role/user-role-manager.component';
 
 const routes: Routes = [
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
     path: 'user-create', component: UserCreateComponent
   },
   {
-    path: 'add-role-user/:userId', component: AddRoleUserComponent
+    path: 'manage-user-role/:userId', component: UserRoleManagerComponent
   }
 ];
 

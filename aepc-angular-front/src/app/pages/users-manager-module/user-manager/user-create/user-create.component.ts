@@ -1,10 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
 import { AppUser } from 'src/app/shared/models/user-auth/user.model';
-import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
 import { UsersManagementService } from 'src/app/shared/services/app-user-service/users.service';
 import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.pyblisher';
 

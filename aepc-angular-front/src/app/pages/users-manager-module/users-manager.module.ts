@@ -11,9 +11,10 @@ import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ReactiveFormsModule } from '@angular/forms';
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordModule } from 'primeng/password';
-import { AddRoleUserComponent } from './user-manager/add-role-user/add-role-user.component';
+import { UserRoleManagerComponent } from './user-manager/user-role/user-role-manager.component';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { AddRoleUserComponent } from './user-manager/add-role-user/add-role-user
     UsersPrinterComponent,
     UserCreateComponent,
     UserUPrintComponent,
-    AddRoleUserComponent
+    UserRoleManagerComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +33,9 @@ import { AddRoleUserComponent } from './user-manager/add-role-user/add-role-user
     ConfirmDialogModule,
     TableModule,
     ReactiveFormsModule,
-    PasswordModule
+    PasswordModule,
+    RadioButtonModule,
+    FormsModule
   ],
   providers:[ConfirmationService, MessageService]
 })
