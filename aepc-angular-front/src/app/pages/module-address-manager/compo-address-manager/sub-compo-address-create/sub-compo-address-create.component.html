@@ -5,11 +5,11 @@
     <p-confirmDialog [style]="{width: '20vw'}" />
     <form [formGroup]="addressForm" (ngSubmit)="onAddressFormSubmit()">
       <label for="num">num</label>
-      <input type="text" formControlName="num" class="form-control" [ngClass]="{
+      <input type="number" formControlName="num" class="form-control" [ngClass]="{
             'is-invalid':
               addressForm.controls['num'].touched &&
               addressForm.controls['num'].invalid
-          }" />
+          }"/>
       <div class="invalid-feedback">
         <span *ngIf="addressForm.controls['num'].errors?.['required']">
           num required
@@ -37,7 +37,7 @@
 
 
       <label for="pb">pb</label>
-      <input type="text" formControlName="pb" class="form-control"
+      <input type="number" formControlName="pb" class="form-control"
         [ngClass]="{'is-invalid':addressForm.controls['pb'].touched && addressForm.controls['pb'].invalid}" />
 
       <div class="invalid-feedback">

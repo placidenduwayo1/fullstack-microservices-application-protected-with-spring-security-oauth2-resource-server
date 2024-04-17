@@ -75,4 +75,12 @@ public class SecurityController {
     public AppUser getUserById(@PathVariable(name = "userId") Long userId) throws AppUserNotFoundException {
         return appService.getUserById(userId);
     }
+    @GetMapping(value="/roles/{role}")
+    public  AppRole getRoleByName(@PathVariable(name = "role") String role){
+       return appService.getRoleByRoleName(role);
+    }
+    @GetMapping(value = "/users/{username}")
+    public AppUser getUserByUsername(@PathVariable(name = "username") String username){
+        return appService.getUserByUsername(username);
+    }
 }

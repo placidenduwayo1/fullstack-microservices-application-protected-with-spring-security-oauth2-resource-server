@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
-import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.pyblisher';
+import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
 
 
 @Component({

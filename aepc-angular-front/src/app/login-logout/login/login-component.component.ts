@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
 import { DtoToken } from 'src/app/shared/models/user-auth/dto.token';
 import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
-import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.pyblisher';
+import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
 
 @Component({
   selector: 'app-login-component',

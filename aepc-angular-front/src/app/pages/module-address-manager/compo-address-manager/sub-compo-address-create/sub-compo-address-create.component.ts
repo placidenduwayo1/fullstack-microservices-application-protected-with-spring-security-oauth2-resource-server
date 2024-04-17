@@ -25,7 +25,7 @@ export class SubCompoAddressCreateComponent implements OnInit {
       addressId: ['', Validators.required],
       num: ['', [Validators.required, Validators.min(1)]],
       street: ['', [Validators.required, Validators.minLength(5)]],
-      pb: ['', [Validators.required, Validators.min(10000)]],
+      pb: ['', [Validators.required]],
       city: ['', [Validators.required, Validators.minLength(3)]],
       country: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]]
     });

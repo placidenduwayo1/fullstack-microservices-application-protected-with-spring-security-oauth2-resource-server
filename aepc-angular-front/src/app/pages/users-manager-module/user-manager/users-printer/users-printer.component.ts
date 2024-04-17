@@ -4,7 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
 import { AppUser } from 'src/app/shared/models/user-auth/user.model';
 import { UsersManagementService } from 'src/app/shared/services/app-user-service/users.service';
-import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.pyblisher';
+import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
 
 @Component({
   selector: 'app-users-printer',
@@ -23,7 +23,7 @@ export class UsersPrinterComponent implements OnInit {
   ngOnInit(): void {
     this.userEventPublisher.userEventObservable.subscribe((event: UserEvent) => {
       switch (event) {
-        case UserEvent.MANAGE_USER_EVENT:
+        case UserEvent.MANAGE_USER:
           console.log(event);
           this.router.navigateByUrl(`session/users-management/manage-user-role/${this.idUserToUpdate}`);
           break;
@@ -63,7 +63,7 @@ export class UsersPrinterComponent implements OnInit {
   idUserToUpdate!: number;
   onUpdate(user: AppUser) {
     this.idUserToUpdate = user.userId;
-    this.userEventPublisher.publishUserEvent(UserEvent.MANAGE_USER_EVENT);
+    this.userEventPublisher.publishUserEvent(UserEvent.MANAGE_USER);
   }
   idUserToDelete!: number;
   onDelete(userId: number) {

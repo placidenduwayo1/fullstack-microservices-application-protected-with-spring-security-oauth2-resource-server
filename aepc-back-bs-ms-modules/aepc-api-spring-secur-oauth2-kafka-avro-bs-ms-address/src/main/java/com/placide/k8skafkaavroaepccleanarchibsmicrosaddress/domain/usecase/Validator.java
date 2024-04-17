@@ -10,7 +10,7 @@ public class Validator {
     public static boolean isInvalidAddress(AddressDto addressDto){
         return addressDto.getNum()<1
                 || addressDto.getStreet().isBlank()
-                || addressDto.getPb()<10000
+                || addressDto.getPb()<0
                 || addressDto.getCity().isBlank()
                 || addressDto.getCountry().isBlank();
     }

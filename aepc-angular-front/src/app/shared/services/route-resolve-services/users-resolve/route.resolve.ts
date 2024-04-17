@@ -10,5 +10,5 @@ export const GetAllUsersResolve : ResolveFn<Array<AppUser>> = ()=>{
 
 export const GetUserResolve : ResolveFn<AppUser> = ()=>{
     const userId = inject(ActivatedRoute).snapshot.params['userId'];
-    return inject(UsersManagementService).getUser(userId);
+    return inject(UsersManagementService).getUserById(userId);
 }
