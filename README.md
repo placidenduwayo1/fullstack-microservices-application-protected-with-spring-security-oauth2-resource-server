@@ -32,8 +32,9 @@
 # Fronted
 - reactive angular application avec la librairie RxJs
 
-# Architecture
-![demo](https://github.com/placidenduwayo1/fullstack-microservices-application-protected-with-spring-security-oauth2-resource-server/assets/124048212/446d30c3-2871-4120-8a5c-999918e24f19)
+# appplication architecture
+![demo](https://github.com/placidenduwayo1/fullstack-microservices-application-protected-with-spring-security-oauth2-resource-server/assets/124048212/b27e8341-0b60-4924-afba-bf28460bfdd9)
+
 
 
 
