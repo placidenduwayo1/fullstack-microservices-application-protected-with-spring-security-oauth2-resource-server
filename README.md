@@ -16,7 +16,7 @@
 
 ## microservice pour la sécurité
 - **api-spring-security-oauth2-service** pour l'authentication des utilisateurs
-- ce service gère les authentications basées sur des tokens JWT d'authentification
+- ce service gère les authentications et les autorisations en utilisant un JWT token
 - il encode et decode les tokens JWT evec JwtEncoder / JwtDecoder et signe le JWT avec l'algo RSA à deux clés publique et privée 
 
 ## communication et authentification entre microservices
