@@ -16,7 +16,7 @@
 
 ## microservice pour la sécurité
 - **api-spring-security-oauth2-service** pour l'authentication des utilisateurs
-- ce service gère les authentications basées sur des tokens JWT d'authentification
+- ce service gère les authentications et les autorisations en utilisant un JWT token
 - il encode et decode les tokens JWT evec JwtEncoder / JwtDecoder et signe le JWT avec l'algo RSA à deux clés publique et privée 
 
 ## communication et authentification entre microservices
@@ -32,8 +32,10 @@
 # Fronted
 - reactive angular application avec la librairie RxJs
 
-# Architecture globale:
-![demo](https://github.com/placidenduwayo1/fullstack-microservices-application-protected-with-spring-security-oauth2-resource-server/assets/124048212/d845c2be-3894-4347-9e09-27f3b0050aea)
+# appplication architecture
+![demo](https://github.com/placidenduwayo1/fullstack-microservices-application-protected-with-spring-security-oauth2-resource-server/assets/124048212/b27e8341-0b60-4924-afba-bf28460bfdd9)
+
+
 
 
 
