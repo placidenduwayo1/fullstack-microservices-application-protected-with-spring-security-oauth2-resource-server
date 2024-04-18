@@ -2,15 +2,19 @@
 
     <h4> username & role </h4>
     <div class="flex">
-        <p-radioButton name="operation1" value="V1"  [label]="'add role to user'"  [(ngModel)]="selectedOp" (onClick)="addRoleToUser()"/> &nbsp;
-        <p-radioButton name="operation2" value="V2"   [label]="'remove role from user'"  [(ngModel)]="selectedOp" (onClick)="removeRoleFromUser()"/>&nbsp;
-        <p-radioButton name="operation3" value="V3"  inputId="radio3" [label]="'change pwd'"  [(ngModel)]="selectedOp" (onClick)="openPwdChangeUI()"/>
+        <p-radioButton name="operation1" value="V1" [label]="'add role to user'" [(ngModel)]="selectedOp"
+            (onClick)="addRoleToUser()" /> &nbsp;
+        <p-radioButton name="operation2" value="V2" [label]="'remove role from user'" [(ngModel)]="selectedOp"
+            (onClick)="removeRoleFromUser()" />&nbsp;
+        <p-radioButton name="operation3" value="V3" inputId="radio3" [label]="'change pwd'" [(ngModel)]="selectedOp"
+            (onClick)="openPwdChangeUI()" />
+        <p-radioButton name="operation4" value="V4" inputId="radio4" [label]="'create role'" [(ngModel)]="selectedOp"
+            (onClick)="openRoleUI()" />
     </div>
-    
 
     <p-messages key="add" />
     <p-messages key="reject" />
-    <p-messages key="remove"/>
+    <p-messages key="remove" />
     <ng-container>
         <p-confirmDialog [style]="{width:'20wv'}" />
         <form [formGroup]="roleUserForm" *ngIf="roleUserForm">
@@ -19,7 +23,7 @@
                 <label for="username">username</label>
                 <input pInputText id="username" formControlName="username" [ngClass]="{'is-invalid':
                 roleUserForm.get('username')?.touched && roleUserForm.get('username')?.invalid}"
-                    class="form-control"/>
+                    class="form-control" />
             </div>
 
             <div class="mt-2">
@@ -37,50 +41,77 @@
                 </button>
             </div>
         </form>
+    </ng-container>
 
+    <ng-container>
+        <p-messages key="chg-pwd0" />
+        <p-messages key="pwdChanged" />
         <form [formGroup]="chgPwdForm" *ngIf="chgPwdForm">
 
             <div class="mt-2">
                 <label for="username1">username</label>
                 <input pInputText id="username1" formControlName="username1" [ngClass]="{'is-invalid':
-                chgPwdForm.get('username1')?.touched && chgPwdForm.get('username1')?.invalid}"
-                    class="form-control"/>
+                chgPwdForm.get('username1')?.touched && chgPwdForm.get('username1')?.invalid}" class="form-control" />
             </div>
 
             <div class="mt-2">
                 <label for="role">current pwd</label>
-                <input pInputText id="pwd" formControlName="pwd" [ngClass]="{'is-invalid':
-                chgPwdForm.get('pwd')?.touched && chgPwdForm.get('pwd')?.invalid}" class="form-control"
-                    placeholder="current pwd to {{user.username}}" />
+                <p-password id="currentPwd" formControlName="currentPwd" [toggleMask]="true" [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}" placeholder="current pwd to {{user.username}}"
+                    [ngClass]="{'is-invalid':chgPwdForm.get('currentPwd')?.touched && chgPwdForm.get('currentPwd')?.invalid}" />
+
                 <div class="invalid-feedback">
-                    <span *ngIf="chgPwdForm.controls['pwd'].errors?.['required']">required</span>
+                    <span *ngIf="chgPwdForm.controls['currentPwd'].errors?.['required']">required</span>
                 </div>
             </div>
             <div class="mt-2">
                 <label for="pwdNew">new pwd</label>
-                <input pInputText id="pwdNew" formControlName="pwdNew" [ngClass]="{'is-invalid':
-                chgPwdForm.get('pwdNew')?.touched && chgPwdForm.get('pwdNew')?.invalid}" class="form-control"
-                    placeholder="new pwd to {{user.username}}" />
+                <p-password id="pwdNew" formControlName="pwdNew" [toggleMask]="true" [style]="{'width':'100%'}"
+                    [inputStyle]="{'width':'100%'}" placeholder="type new pwd for {{user.username}}"
+                    [ngClass]="{'is-invalid':chgPwdForm.get('pwdNew')?.touched && chgPwdForm.get('pwdNew')?.invalid}" />
+
                 <div class="invalid-feedback">
                     <span *ngIf="chgPwdForm.controls['pwdNew'].errors?.['required']">required</span>
                 </div>
             </div>
             <div class="mt-2">
                 <label for="pwdNewConfirm">new pwd confirm</label>
-                <input pInputText id="pwdNewConfirm" formControlName="pwdNewConfirm" [ngClass]="{'is-invalid':
-                chgPwdForm.get('pwdNew')?.touched && chgPwdForm.get('pwdNewConfirm')?.invalid}" class="form-control"
-                    placeholder="current pwd to {{user.username}}" />
+
+                <p-password id="pwdNewConfirm" formControlName="pwdNewConfirm" [toggleMask]="true"
+                    [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                    placeholder="confirm new pwd for {{user.username}}"
+                    [ngClass]="{'is-invalid':chgPwdForm.get('pwdNewConfirm')?.touched && chgPwdForm.get('pwdNewConfirm')?.invalid}" />
+
                 <div class="invalid-feedback">
-                    <span *ngIf="roleUserForm.controls['pwdNewConfirm'].errors?.['required']">required</span>
+                    <span *ngIf="chgPwdForm.controls['pwdNewConfirm'].errors?.['required']">required</span>
                 </div>
             </div>
 
             <div class="text-center mt-2">
-                <button type="submit" class="btn btn-outline-primary" (click)="onSubmit1()">
+                <button type="submit" class="btn btn-outline-primary" (click)="onSubmitChangePwd()">
                     Submit
                 </button>
             </div>
         </form>
-
     </ng-container>
+
+    <ng-container>
+        <p-messages key="add-role"/>
+        <form [formGroup]="roleForm" *ngIf="roleForm">
+            <label for="role">role name</label>
+            <input type="text" id="role" class="form-control" formControlName="role"
+            [ngClass]="{'is-invalid':roleForm.get('role')?.touched && roleForm.get('role')?.invalid}"/>
+            <div class="invalid-feedback">
+                <span *ngIf="roleForm.controls['role'].errors?.['required']">required</span>
+                <span *ngIf="roleForm.controls['role'].errors?.['minlength']">min 2 characters</span>
+            </div>
+
+            <div class="text-center mt-2">
+                <button type="submit" class="btn btn-outline-primary" (click)="onSubmitAddRole()">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </ng-container>
+
 </div>

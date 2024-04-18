@@ -35,6 +35,8 @@
     
                 <div class="invalid-feedback">
                     <span *ngIf="userForm.controls['pwd'].errors?.['required']">required</span>
+                    <span *ngIf="userForm.controls['pwd'].errors?.['minlength']">min 8 characters</span>
+                    <span *ngIf="userForm.controls['pwd'].errors?.['maxlength']">max 16 characters</span>
                 </div>
             </div>
     

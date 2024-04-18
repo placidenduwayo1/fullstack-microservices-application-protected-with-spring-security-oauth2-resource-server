@@ -14,32 +14,32 @@
           <th>pb</th>
           <th>city</th>
           <th>country</th>
-          
+
           <button class="btn btn-outline-primary mt-2" *ngIf="addressesList"
             (click)="onPrintNbrAddressesEventEmitter(addressesList.length)">nbr addresses </button>
-          
+
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-address>
         <tr>
-          <td > {{address.addressId}} </td>
+          <td> {{address.addressId}} </td>
           <td>{{ address.num }}</td>
           <td>{{ address.street }}</td>
           <td>{{ address.pb }}</td>
           <td>{{ address.city }}</td>
           <td>{{ address.country }}</td>
-          
-            <button class="btn">
-              <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onAddressUpdate(address)"></i>
-            </button>
-            <button class="btn">
-              <i class="fa fa-trash" style="color: red" (click)="onAddressDelete(address.addressId)"></i>
-            </button>
-            <button class="btn">
-              <i class="fa fa-list" style="color: mediumturquoise"
-                (click)="onPrintEmployeesLivigOnThisAddress(address.addressId)">employees </i>
-            </button>
-          
+
+          <button class="btn">
+            <i class="fa fa-pencil" style="color: mediumturquoise" (click)="onAddressUpdate(address)"></i>
+          </button>
+          <button class="btn">
+            <i class="fa fa-trash" style="color: red" (click)="onAddressDelete(address.addressId)"></i>
+          </button>
+          <button class="btn">
+            <i class="fa fa-list" style="color: mediumturquoise"
+              (click)="onPrintEmployeesLivigOnThisAddress(address.addressId)">employees </i>
+          </button>
+
         </tr>
       </ng-template>
 

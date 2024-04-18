@@ -1,6 +1,6 @@
 import { inject } from "@angular/core";
-import { CanActivateFn, Router } from "@angular/router";
-import { UserAuthenticationService } from "../app-user-service/authentication.service";
+import { CanActivateFn } from "@angular/router";
+import { UserAuthenticationService } from "../rest-services/app-user-service/authentication.service";
 
 export const authenticationGuardService: CanActivateFn = () => {
 
@@ -24,7 +24,8 @@ export const authorizationGuardService: CanActivateFn = () => {
   const authService = inject(UserAuthenticationService);
   const jwtToken = authService.getToken();
   const decodedJwt: any = authService.getDecodedJwt(jwtToken);
-  if (decodedJwt.scope.includes("ADMIN") || decodedJwt.scope.includes("HR")) {
+  const authorities = ['ADMIN','MANAGER','USER','HR']
+  if (decodedJwt.scope.some((authority: string)=>authorities.includes(authority))) {
     return true;
   }
   return false;

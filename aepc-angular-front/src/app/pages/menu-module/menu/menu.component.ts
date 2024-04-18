@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
 import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
+import { UserAuthenticationService } from 'src/app/shared/services/rest-services/app-user-service/authentication.service';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
 
   private router = inject(Router);
   private userAUthService = inject(UserAuthenticationService);
-  private userEventPublisher = inject(UserEventServicePublisher);
+
 
   ngOnInit(): void {
     this.items = [
@@ -125,5 +125,6 @@ export class MenuComponent implements OnInit {
     "username": this.decodedJwt.sub,
     "roles": this.decodedJwt.scope
   }
-  authorized: boolean = this.decodedJwt.scope.includes("ADMIN", "HR");
+  authorities = ['ADMIN','MANAGER','USER','HR']
+  authorized: boolean = this.decodedJwt.scope.some((a:string)=>this.authorities.includes(a));
 }

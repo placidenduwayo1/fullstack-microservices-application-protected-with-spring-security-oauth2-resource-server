@@ -3,6 +3,7 @@ package fr.placide.springsecurityservice.web.controller;
 import fr.placide.springsecurityservice.exceptions.*;
 import fr.placide.springsecurityservice.manageusers.dtos.RoleDto;
 import fr.placide.springsecurityservice.manageusers.dtos.RoleUserForm;
+import fr.placide.springsecurityservice.manageusers.dtos.UserChgPwdDto;
 import fr.placide.springsecurityservice.manageusers.dtos.UserDto;
 import fr.placide.springsecurityservice.manageusers.entities.AppRole;
 import fr.placide.springsecurityservice.manageusers.entities.AppUser;
@@ -34,7 +35,7 @@ public class SecurityController {
     }
 
     @PostMapping(value = "/users")
-    public AppUser createUser(@RequestBody UserDto dto) throws UserAlreadyExistsException, PasswordAndPasswordConfirmationNotMatchException {
+    public AppUser createUser(@RequestBody UserDto dto) throws UserAlreadyExistsException {
         return appService.createUser(dto);
     }
 
@@ -63,24 +64,35 @@ public class SecurityController {
     public AppUser removeRoleFromUser(@RequestBody RoleUserForm roleUserForm) throws AppRoleNotFoundException, AppUserNotFoundException {
         return appService.removeRoleFromUser(roleUserForm);
     }
+
     @PostMapping(value = "/login")
     public ResponseEntity<Map<String, Object>> generateToken(@RequestBody DtoToken dtoToken) {
         return jwtService.generateToken(dtoToken);
     }
+
     @DeleteMapping(value = "/users/id/{userId}")
     public void deleteUser(@PathVariable(name = "userId") Long userId) throws AppUserNotFoundException {
         appService.deleteUser(userId);
     }
+
     @GetMapping(value = "/users/id/{userId}")
     public AppUser getUserById(@PathVariable(name = "userId") Long userId) throws AppUserNotFoundException {
         return appService.getUserById(userId);
     }
-    @GetMapping(value="/roles/{role}")
-    public  AppRole getRoleByName(@PathVariable(name = "role") String role){
-       return appService.getRoleByRoleName(role);
+
+    @GetMapping(value = "/roles/{role}")
+    public AppRole getRoleByName(@PathVariable(name = "role") String role) {
+        return appService.getRoleByRoleName(role);
     }
+
     @GetMapping(value = "/users/{username}")
-    public AppUser getUserByUsername(@PathVariable(name = "username") String username){
+    public AppUser getUserByUsername(@PathVariable(name = "username") String username) {
         return appService.getUserByUsername(username);
+    }
+
+    @PostMapping(value = "/change-pwd")
+    public AppUser changeUserPwd(@RequestBody UserChgPwdDto dto) throws
+            AppUserNotFoundException, RegisteredPasswordNotMatchException, NewPasswordMuchSimilarToOldException {
+        return appService.changeUserPwd(dto);
     }
 }

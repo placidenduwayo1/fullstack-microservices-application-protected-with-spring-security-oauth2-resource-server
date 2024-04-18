@@ -1,10 +1,13 @@
+import { json } from '@angular-devkit/core';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
+import { AppRole } from 'src/app/shared/models/user-auth/role.model';
 import { AppUser } from 'src/app/shared/models/user-auth/user.model';
-import { UsersManagementService } from 'src/app/shared/services/app-user-service/users.service';
 import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
+import { UsersManagementService } from 'src/app/shared/services/rest-services/app-user-service/users.service';
 
 @Component({
   selector: 'app-users-printer',
@@ -33,23 +36,36 @@ export class UsersPrinterComponent implements OnInit {
             acceptLabel: 'Yes',
             rejectLabel: 'No',
             message: 'Do you really want to delete this user??',
-
             accept: () => {
-              this.userService.delete(this.idUserToDelete).subscribe(
-                ()=>{
-                  this.userEventPublisher.publishUserEvent(UserEvent.REFRESH)
+              const user$: Observable<AppUser> | any = this.userService.getUserById(this.idUserToDelete);
+              user$.subscribe((user: AppUser) => {
+                const roles: Array<AppRole> | any = user.roles;
+                if (roles.length > 0) {
                   this.msgService.add({
-                    key:'delete',
-                    severity: 'success',
-                    detail: 'user deleted successfully',
+                    key: 'delete',
+                    severity: 'error',
+                    detail: `can not delete ${user.username} because is associated role(s), remove first all roles related`,
                     sticky: true
                   });
                 }
-              );
+                else {
+                  this.userService.delete(this.idUserToDelete).subscribe(
+                    () => {
+                      this.userEventPublisher.publishUserEvent(UserEvent.REFRESH)
+                      this.msgService.add({
+                        key: 'delete',
+                        severity: 'success',
+                        detail: 'user deleted successfully',
+                        sticky: true
+                      });
+                    }
+                  );
+                }
+              })
             },
-            reject: ()=>{
+            reject: () => {
               this.msgService.add({
-                key:'reject',
+                key: 'reject',
                 severity: 'error',
                 detail: 'user deletion rejected',
                 sticky: true

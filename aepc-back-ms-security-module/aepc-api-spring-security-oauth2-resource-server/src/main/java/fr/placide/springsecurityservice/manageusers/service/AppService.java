@@ -3,6 +3,7 @@ package fr.placide.springsecurityservice.manageusers.service;
 import fr.placide.springsecurityservice.exceptions.*;
 import fr.placide.springsecurityservice.manageusers.dtos.RoleDto;
 import fr.placide.springsecurityservice.manageusers.dtos.RoleUserForm;
+import fr.placide.springsecurityservice.manageusers.dtos.UserChgPwdDto;
 import fr.placide.springsecurityservice.manageusers.dtos.UserDto;
 import fr.placide.springsecurityservice.manageusers.entities.AppRole;
 import fr.placide.springsecurityservice.manageusers.entities.AppUser;
@@ -10,7 +11,7 @@ import fr.placide.springsecurityservice.manageusers.entities.AppUser;
 import java.util.Collection;
 
 public interface AppService {
-    AppUser createUser(UserDto dto) throws UserAlreadyExistsException, PasswordAndPasswordConfirmationNotMatchException;
+    AppUser createUser(UserDto dto) throws UserAlreadyExistsException;
     AppRole createRole(RoleDto dto) throws  RoleAlreadyExistsException;
     AppUser getUserByUsername(String username);
     AppRole getRoleByRoleName(String roleName);
@@ -21,4 +22,5 @@ public interface AppService {
     void deleteUser(Long userId) throws AppUserNotFoundException;
 
     AppUser getUserById(Long userId) throws AppUserNotFoundException;
+    AppUser changeUserPwd(UserChgPwdDto dto) throws AppUserNotFoundException, RegisteredPasswordNotMatchException, NewPasswordMuchSimilarToOldException;
 }

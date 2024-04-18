@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
 import { AppUser } from 'src/app/shared/models/user-auth/user.model';
-import { UsersManagementService } from 'src/app/shared/services/app-user-service/users.service';
 import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
+import { UsersManagementService } from 'src/app/shared/services/rest-services/app-user-service/users.service';
 
 @Component({
   selector: 'app-user-manager',

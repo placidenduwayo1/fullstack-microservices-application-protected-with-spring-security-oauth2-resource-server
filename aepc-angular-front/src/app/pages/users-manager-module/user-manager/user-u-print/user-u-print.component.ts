@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { UserAuthenticationService } from 'src/app/shared/services/app-user-service/authentication.service';
+import { UserAuthenticationService } from 'src/app/shared/services/rest-services/app-user-service/authentication.service';
 
 @Component({
   selector: 'app-user-u-print',

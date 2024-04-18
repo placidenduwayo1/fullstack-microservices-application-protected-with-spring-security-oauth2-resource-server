@@ -22,11 +22,13 @@ public class SecurityExceptionHandler {
             return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
         } else if (exc instanceof UserHasAlreadyThisRoleException) {
             return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
-        } else if (exc instanceof PasswordAndPasswordConfirmationNotMatchException) {
-            return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
         } else if (exc instanceof BadCredentialsException) {
             return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
         } else if (exc instanceof AccessDeniedException) {
+            return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
+        } else if (exc instanceof RegisteredPasswordNotMatchException) {
+            return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
+        } else if (exc instanceof NewPasswordMuchSimilarToOldException) {
             return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);
         } else
             return new ResponseEntity<>(exc.getMessage(), HttpStatus.UNAUTHORIZED);

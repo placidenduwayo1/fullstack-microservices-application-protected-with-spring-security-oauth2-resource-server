@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserEvent } from 'src/app/shared/models/events/events.model';
 import { AppUser } from 'src/app/shared/models/user-auth/user.model';
-import { UsersManagementService } from 'src/app/shared/services/app-user-service/users.service';
 import { UserEventServicePublisher } from 'src/app/shared/services/publisher-events-services/user.events.publisher';
+import { UsersManagementService } from 'src/app/shared/services/rest-services/app-user-service/users.service';
 
 @Component({
   selector: 'app-user-create',
@@ -19,13 +19,14 @@ export class UserCreateComponent implements OnInit {
   private confirmService = inject(ConfirmationService);
   private userService = inject (UsersManagementService);
 
+
   ngOnInit(): void {
     this.userForm = this.fb.group({
       userId: ['', Validators.required],
       firstname: ['', [Validators.required, Validators.minLength(2)]],
       lastname: ['', [Validators.required, Validators.minLength(2)]],
-      pwd: ['', Validators.required],
-      pwdConfirm: ['', Validators.required]
+      pwd: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16)]],
+      pwdConfirm: ['', [Validators.required,Validators.minLength(8), Validators.maxLength(16)]]
     });
 
     this.userEventPublisher.userEventObservable.subscribe((event: UserEvent) => {
@@ -37,6 +38,14 @@ export class UserCreateComponent implements OnInit {
           message: 'Confirm user creation',
 
           accept: () => {
+            if (this.userForm.value.pwd !== this.userForm.value.pwdConfirm) {
+              this.msgService.add({
+                key: 'chg-pwd0',
+                severity: 'error',
+                detail: 'Password and Confirm Password not match Exception',
+                sticky: true
+              });
+            }
             this.userService.createUser(this.userForm.value).subscribe((user:AppUser)=>{
               this.msgService.add({
                 key: 'create',
