@@ -1,49 +1,76 @@
 <div class=" card container mt-4" style="width: fit-content;">
 
     <h4> username & role </h4>
-    <div class="flex">
+    <div class="flex mt-2">
         <p-radioButton name="operation1" value="V1" [label]="'add role to user'" [(ngModel)]="selectedOp"
-            (onClick)="addRoleToUser()" /> &nbsp;
+            (onClick)="openUIAddRoleToUser()"/>&nbsp;
         <p-radioButton name="operation2" value="V2" [label]="'remove role from user'" [(ngModel)]="selectedOp"
-            (onClick)="removeRoleFromUser()" />&nbsp;
+            (onClick)="openUIRemoveRoleFromUser()"/>&nbsp;
         <p-radioButton name="operation3" value="V3" inputId="radio3" [label]="'change pwd'" [(ngModel)]="selectedOp"
-            (onClick)="openPwdChangeUI()" />
+            (onClick)="openUIPwdChange()"/>&nbsp;
         <p-radioButton name="operation4" value="V4" inputId="radio4" [label]="'create role'" [(ngModel)]="selectedOp"
-            (onClick)="openRoleUI()" />
+            (onClick)="openUIAddRole()" />
     </div>
 
     <p-messages key="add" />
     <p-messages key="reject" />
     <p-messages key="remove" />
-    <ng-container>
+    <ng-container *ngIf="radionBtn1Checked">
         <p-confirmDialog [style]="{width:'20wv'}" />
-        <form [formGroup]="roleUserForm" *ngIf="roleUserForm">
+        <form [formGroup]="roleUserAddForm" *ngIf="roleUserAddForm">
 
             <div class="mt-2">
                 <label for="username">username</label>
                 <input pInputText id="username" formControlName="username" [ngClass]="{'is-invalid':
-                roleUserForm.get('username')?.touched && roleUserForm.get('username')?.invalid}"
+                roleUserAddForm.get('username')?.touched && roleUserAddForm.get('username')?.invalid}"
                     class="form-control" />
             </div>
 
             <div class="mt-2">
                 <label for="role">role</label>
                 <input pInputText id="role" formControlName="role" [ngClass]="{'is-invalid':
-                roleUserForm.get('role')?.touched && roleUserForm.get('role')?.invalid}" class="form-control"
-                    placeholder="new rôle to {{user.username}}" />
+                roleUserAddForm.get('role')?.touched && roleUserAddForm.get('role')?.invalid}" class="form-control"
+                    placeholder="input new role name to add to {{user.username}}" />
                 <div class="invalid-feedback">
-                    <span *ngIf="roleUserForm.controls['role'].errors?.['required']">required</span>
+                    <span *ngIf="roleUserAddForm.controls['role'].errors?.['required']">required</span>
                 </div>
             </div>
             <div class="text-center mt-2">
-                <button type="submit" class="btn btn-outline-primary" (click)="onSubmit()">
+                <button type="submit" class="btn btn-outline-primary" (click)="onSubmitRoleUserAdd()">
                     Submit
                 </button>
             </div>
         </form>
     </ng-container>
 
-    <ng-container>
+    <ng-container *ngIf="radionBtn2Checked">
+        <form [formGroup]="roleUserRemoveForm" *ngIf="roleUserRemoveForm">
+
+            <div class="mt-2">
+                <label for="username">username</label>
+                <input pInputText id="username" formControlName="username" [ngClass]="{'is-invalid':
+                roleUserRemoveForm.get('username')?.touched && roleUserRemoveForm.get('username')?.invalid}"
+                    class="form-control" />
+            </div>
+
+            <div class="mt-2">
+                <label for="role">role</label>
+                <input pInputText id="role" formControlName="role" [ngClass]="{'is-invalid':
+                roleUserRemoveForm.get('role')?.touched && roleUserRemoveForm.get('role')?.invalid}" class="form-control"
+                    placeholder="input role name to remove from {{user.username}}" />
+                <div class="invalid-feedback">
+                    <span *ngIf="roleUserRemoveForm.controls['role'].errors?.['required']">required</span>
+                </div>
+            </div>
+            <div class="text-center mt-2">
+                <button type="submit" class="btn btn-outline-primary" (click)="onSubmitRoleUserRemove()">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </ng-container>
+
+    <ng-container *ngIf="radionBtn3Checked">
         <p-messages key="chg-pwd0" />
         <p-messages key="pwdChanged" />
         <form [formGroup]="chgPwdForm" *ngIf="chgPwdForm">
@@ -95,7 +122,7 @@
         </form>
     </ng-container>
 
-    <ng-container>
+    <ng-container *ngIf="radionBtn4Checked">
         <p-messages key="add-role"/>
         <form [formGroup]="roleForm" *ngIf="roleForm">
             <label for="role">role name</label>

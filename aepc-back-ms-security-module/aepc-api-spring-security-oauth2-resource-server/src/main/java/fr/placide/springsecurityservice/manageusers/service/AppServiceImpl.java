@@ -101,7 +101,7 @@ public class AppServiceImpl implements AppService{
         }
         Collection<AppRole> roles = user.getRoles();
         if(roles.contains(role)) {
-            throw new UserHasAlreadyThisRoleException("User "+roleUserForm.getUsername()+" has already role "+roleUserForm.getRole());
+            throw new UserHasAlreadyThisRoleException(String.format("User %s  has already role %s Exception",roleUserForm.getUsername(),roleUserForm.getRole()));
         }
         roles.add(role);
 

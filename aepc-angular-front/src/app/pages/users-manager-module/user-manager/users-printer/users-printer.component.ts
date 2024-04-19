@@ -26,7 +26,7 @@ export class UsersPrinterComponent implements OnInit {
   ngOnInit(): void {
     this.userEventPublisher.userEventObservable.subscribe((event: UserEvent) => {
       switch (event) {
-        case UserEvent.MANAGE_USER:
+        case UserEvent.ROLE_USER_MANAGE:
           console.log(event);
           this.router.navigateByUrl(`session/users-management/manage-user-role/${this.idUserToUpdate}`);
           break;
@@ -79,7 +79,7 @@ export class UsersPrinterComponent implements OnInit {
   idUserToUpdate!: number;
   onUpdate(user: AppUser) {
     this.idUserToUpdate = user.userId;
-    this.userEventPublisher.publishUserEvent(UserEvent.MANAGE_USER);
+    this.userEventPublisher.publishUserEvent(UserEvent.ROLE_USER_MANAGE);
   }
   idUserToDelete!: number;
   onDelete(userId: number) {

@@ -23,37 +23,33 @@ export class UserRoleManagerComponent implements OnInit {
   private userEventPublisher = inject(UserEventServicePublisher);
   private confirmService = inject(ConfirmationService);
   private msgService = inject(MessageService);
-  roleUserForm!: FormGroup;
+  roleUserAddForm!: FormGroup;
+  roleUserRemoveForm!: FormGroup;
   chgPwdForm!: FormGroup;
   roleForm!: FormGroup;
-
   user$!: Observable<AppUser>;
   user!: AppUser;
 
-  operations: any[] = [
-    { name: 'add-role-user', key: 'add-role-user' },
-    { name: 'remove-role-user', key: 'remove-role-user' },
-    { name: 'change-password', key: 'change-password' }];
-
   selectedOp: any = null;
+
+  radionBtn1Checked: boolean = false; radionBtn2Checked: boolean = false;
+  radionBtn3Checked: boolean = false; radionBtn4Checked: boolean = false;
 
   ngOnInit(): void {
     this.userId = this.activatedRoute.snapshot.params['userId'];
-
-    this.selectedOp = this.operations[0];
 
     let userEvent$: Observable<UserEvent> = this.userEventPublisher.userEventObservable;
 
     userEvent$.subscribe({
       next: (event1: UserEvent) => {
         switch (event1) {
-          case UserEvent.ADD_ROLE_USER:
+          case UserEvent.OPEN_UI_ADD_ROLE_USER:
             console.log(event1);
             this.user$ = this.userService.getUserById(this.userId);
             this.user$.subscribe({
               next: (appUser: AppUser) => {
                 this.user = appUser;
-                this.roleUserForm = this.fb.group({
+                this.roleUserAddForm = this.fb.group({
                   username: [{ value: appUser.username, disabled: true }],
                   role: ['', [Validators.required, Validators.minLength(2)]]
                 });
@@ -64,35 +60,37 @@ export class UserRoleManagerComponent implements OnInit {
               complete: () => {
                 console.log("observale complete emission");
                 this.userEventPublisher.userEventObservable.subscribe((event2: UserEvent) => {
-                  if (event2 == UserEvent.MANAGE_USER) {
+                  if (event2 == UserEvent.SAVE_ROLE_USER_ADD) {
                     this.confirmService.confirm({
                       acceptLabel: 'Yes',
                       rejectLabel: 'No',
                       message: 'Confirm new Role to user',
                       accept: () => {
-                        const username = this.roleUserForm.getRawValue().username;
-                        const role = this.roleUserForm.value.role;
+                        const username = this.roleUserAddForm.getRawValue().username;
+                        const role = this.roleUserAddForm.value.role;
                         const roles = this.user.roles;
                         console.log(roles);
-                        if (roles.findIndex((value: AppRole) => value.role == role) > 0) {
-                          this.msgService.add({
-                            key: 'add',
-                            severity: 'error',
-                            sticky: true,
-                            detail: `User ${this.user.username} has already role ${role}`
-                          });
-                        }
-                        else {
-                          this.userService.addRoleUser(username, role).subscribe(newUser => {
-                            console.log("new User ", newUser);
+                          if (roles.filter((value: AppRole) => value.role == role).length > 0) {
                             this.msgService.add({
                               key: 'add',
-                              severity: 'success',
-                              detail: `Role successfully added to user  ${this.user.username}`,
-                              sticky: true
+                              severity: 'error',
+                              sticky: true,
+                              detail: `User ${this.user.username} has already role ${role}`
                             });
-                          });
-                        }
+                          }
+                          else {
+                            this.userService.addRoleUser(username, role).subscribe(newUser => {
+                              console.log("new User ", newUser);
+                              this.msgService.add({
+                                key: 'add',
+                                severity: 'success',
+                                detail: `Role successfully added to user  ${this.user.username}`,
+                                sticky: true
+                              });
+                              
+                            });
+                          }
+                      
                       },
                       reject: () => {
                         this.msgService.add({
@@ -109,13 +107,13 @@ export class UserRoleManagerComponent implements OnInit {
             });
             break;
 
-          case UserEvent.REMOVE_ROLE_USER:
+          case UserEvent.OPEN_UI_REMOVE_ROLE_USER:
             console.log(event1);
             this.user$ = this.userService.getUserById(this.userId);
             this.user$.subscribe({
               next: (value: AppUser) => {
                 this.user = value;
-                this.roleUserForm = this.fb.group({
+                this.roleUserRemoveForm = this.fb.group({
                   username: [{ value: this.user.username, disabled: true }],
                   role: ['', [Validators.required, Validators.minLength(2)]]
                 });
@@ -126,48 +124,36 @@ export class UserRoleManagerComponent implements OnInit {
               complete: () => {
                 console.log("observale complete emission");
                 this.userEventPublisher.userEventObservable.subscribe((event3: UserEvent) => {
-                  if (event3 == UserEvent.MANAGE_USER) {
-                    this.confirmService.confirm({
-                      acceptLabel: 'Yes',
-                      rejectLabel: 'No',
-                      message: 'Confirm remove Role from user ' + this.user.username,
-                      accept: () => {
-                        const username = this.roleUserForm.getRawValue().username;
-                        const role = this.roleUserForm.value.role;
-                        const roles = this.user.roles;
-                        if (roles.findIndex((item: AppRole) => item.role == role) < 0) {
-                          this.msgService.add({
-                            key: 'remove',
-                            severity: 'error',
-                            sticky: true,
-                            detail: `Role ${role} for user ${this.user.username} not found exits`
-                          });
-                        }
-                        else {
-                          this.userService.removeRoleFromUser(username, role).subscribe(newUser => {
-                            console.log("new User ", newUser);
-                            this.msgService.add({
-                              key: 'remove',
-                              severity: 'success',
-                              detail: `Role successfully removed from user  ${this.user.username}`,
-                              sticky: true
-                            });
-                          });
-                        }
-                      },
-                      reject: () => {
+                  if (event3 == UserEvent.SAVE_ROLE_USER_REMOVE) {
+                    console.log(event3);
+                    const username = this.roleUserRemoveForm.getRawValue().username;
+                    const role = this.roleUserRemoveForm.value.role;
+                    const roles = this.user.roles;
+                    console.log(roles)
+                  
+                      if (roles.filter((item: AppRole) => item.role == role).length == 0) {
                         this.msgService.add({
-                          key: 'reject',
+                          key: 'remove',
                           severity: 'error',
-                          detail: 'rejected',
-                          sticky: true
+                          sticky: true,
+                          detail: `Role ${role} for user ${this.user.username} not exits Exception`
                         });
                       }
-                    });
+                      else {
+                        this.userService.removeRoleFromUser(username, role).subscribe(newUser => {
+                          console.log("new User ", newUser);
+                          this.msgService.add({
+                            key: 'remove',
+                            severity: 'success',
+                            detail: `Role successfully removed from user  ${this.user.username}`,
+                            sticky: true
+                          });
+                        });
+                      }
                   }
-                })
+                });
               }
-            })
+            });
             break;
 
           case UserEvent.OPEN_PWD_CHANGE_UI:
@@ -176,7 +162,6 @@ export class UserRoleManagerComponent implements OnInit {
             this.user$.subscribe({
               next: (value: AppUser) => {
                 this.user = value;
-                console.log('------------pwd ', this.user.pwd);
                 this.chgPwdForm = this.fb.group({
                   username1: [{ value: this.user.username, disabled: true }],
                   currentPwd: ['', Validators.required],
@@ -201,7 +186,7 @@ export class UserRoleManagerComponent implements OnInit {
                       this.msgService.add({
                         key: 'chg-pwd0',
                         severity: 'error',
-                        detail: 'New Password and Confirm Password not match Exception !!!!!!!!!!!!!!!!!!',
+                        detail: 'New Password and Confirm Password not match Exception',
                         sticky: true
                       });
                     }
@@ -230,22 +215,16 @@ export class UserRoleManagerComponent implements OnInit {
             this.userEventPublisher.userEventObservable.subscribe({
               next: (value: UserEvent) => {
                 console.log(value);
-                let roles: Array<AppRole> | any = null;
-                this.userService.getAllRoles().subscribe((data: Array<AppRole>) => {
-                  roles = data;
-                  console.log(roles);
-                });
                 if (value == UserEvent.SAVE_NEW_ROLE) {
-                  const role: string = this.roleForm.value.role;
-                  this.confirmService.confirm({
-                    acceptLabel: 'Yes',
-                    rejectLabel: 'No',
-                    message: `Confirm create new role ${role}`,
-                    accept: () => {
-
-                      if (roles.findIndex((item: AppRole) => item.role == role)>0) {
+                  let roles: Array<AppRole> | any = null;
+                  this.userService.getAllRoles().subscribe((data: Array<AppRole>) => {
+                    roles = data;
+                    console.log(roles);
+                    const role: string = this.roleForm.value.role;
+                    console.log(role);
+                      if (roles.filter((item: AppRole) => item.role == role).length > 0) {
                         this.msgService.add({
-                          key: 'add-role',
+                          key: 'add',
                           severity: 'error',
                           sticky: true,
                           detail: `Role ${role} already exists in store Exception`
@@ -256,7 +235,7 @@ export class UserRoleManagerComponent implements OnInit {
                         newRole$.subscribe((appRole: AppRole) => {
                           console.log(appRole);
                           this.msgService.add({
-                            key: 'add-role',
+                            key: 'add',
                             severity: 'success',
                             sticky: true,
                             detail: `Role ${role} created successfully`
@@ -264,17 +243,7 @@ export class UserRoleManagerComponent implements OnInit {
                           return appRole;
                         });
                       }
-                    },
-                    reject: () => {
-                      this.msgService.add({
-                        key: 'reject',
-                        severity: 'error',
-                        sticky: true,
-                        detail: `Reject role creation`
-                      });
-                      return null;
-                    }
-                  });
+                    });
                 }
               },
               error: (err) => {
@@ -296,25 +265,43 @@ export class UserRoleManagerComponent implements OnInit {
     });
   }
 
-  addRoleToUser() {
-    this.userEventPublisher.publishUserEvent(UserEvent.ADD_ROLE_USER);
+  openUIAddRoleToUser() {
+    this.userEventPublisher.publishUserEvent(UserEvent.OPEN_UI_ADD_ROLE_USER);
+    this.radionBtn1Checked = true;
+    this.radionBtn2Checked = false;
+    this.radionBtn3Checked = false;
+    this.radionBtn4Checked = false;
   }
-  removeRoleFromUser() {
-    this.userEventPublisher.publishUserEvent(UserEvent.REMOVE_ROLE_USER);
+  openUIRemoveRoleFromUser() {
+    this.userEventPublisher.publishUserEvent(UserEvent.OPEN_UI_REMOVE_ROLE_USER);
+    this.radionBtn1Checked = false;
+    this.radionBtn2Checked = true;
+    this.radionBtn3Checked = false;
+    this.radionBtn4Checked = false;
   }
-  openPwdChangeUI() {
+  openUIPwdChange() {
     this.userEventPublisher.publishUserEvent(UserEvent.OPEN_PWD_CHANGE_UI);
+    this.radionBtn1Checked = false;
+    this.radionBtn2Checked = false;
+    this.radionBtn3Checked = true;
+    this.radionBtn4Checked = false;
+  }
+  openUIAddRole() {
+    this.userEventPublisher.publishUserEvent(UserEvent.OPEN_ROLE_UI);
+    this.radionBtn1Checked = false;
+    this.radionBtn2Checked = false;
+    this.radionBtn3Checked = false;
+    this.radionBtn4Checked = true;
   }
 
-  onSubmit() {
-    this.userEventPublisher.publishUserEvent(UserEvent.MANAGE_USER);
+  onSubmitRoleUserAdd() {
+    this.userEventPublisher.publishUserEvent(UserEvent.SAVE_ROLE_USER_ADD);
+  }
+  onSubmitRoleUserRemove() {
+    this.userEventPublisher.publishUserEvent(UserEvent.SAVE_ROLE_USER_REMOVE)
   }
   onSubmitChangePwd() {
     this.userEventPublisher.publishUserEvent(UserEvent.SAVE_CHANGE_PWD)
-  }
-
-  openRoleUI() {
-    this.userEventPublisher.publishUserEvent(UserEvent.OPEN_ROLE_UI)
   }
   onSubmitAddRole() {
     this.userEventPublisher.publishUserEvent(UserEvent.SAVE_NEW_ROLE)
